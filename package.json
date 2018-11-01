@@ -1,0 +1,29 @@
+{
+    "name": "nt-addon-pay",
+    "version": "1.0.0",
+    "description": "The pay addon for notadd application.",
+    "scripts": {
+        "start": "ts-node -r tsconfig-paths/register starter/main.ts",
+        "start:watch": "nodemon",
+        "debug": "node --inspect-brk -r ts-node/register starter/main.ts",
+        "debug:watch": "nodemon --config nodemon-debug.json",
+        "check": "tslint -p tsconfig.json -c tslint.json",
+        "fix": "tslint -p tsconfig.json -c tslint.json --fix"
+    },
+    "author": "notadd",
+    "license": "Apache-2.0",
+    "dependencies": {
+        "@nestjs/common": "^5.4.0",
+        "@nestjs/core": "^5.4.0",
+        "reflect-metadata": "^0.1.12",
+        "rxjs": "^6.3.3",
+        "typescript": "^3.1.3"
+    },
+    "devDependencies": {
+        "@types/node": "^10.12.0",
+        "nodemon": "^1.18.4",
+        "ts-node": "^7.0.1",
+        "tsconfig-paths": "^3.6.0",
+        "tslint": "^5.11.0"
+    }
+}
