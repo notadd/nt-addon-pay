@@ -19,7 +19,7 @@ export class XmlUtil {
      */
     async parseObjFromXml(xml: any) {
         return new Promise((resolve, reject) => {
-            xml2js.parseString(xml, { explicitRoot: false }, (error, result) => {
+            xml2js.parseString(xml, { explicitRoot: false, explicitArray: false }, (error, result) => {
                 if (error) {
                     reject(error);
                 }
