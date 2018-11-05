@@ -11,14 +11,15 @@ export class SignUtil {
      * @param hashType 签名方式(选填)，默认md5
      */
     async wechatSign(params: {}, secretKey: string, hashType?: 'md5' | 'sha256') {
-        let temp = '';
+        const paramArr: string[] = [];
         const sortedKeys = Object.keys(params).sort();
         for (const key of sortedKeys) {
-            params[key] && (temp += `${key}&${params[key]}`);
+            params[key] && paramArr.push(`${key}=${params[key]}`);
         }
+        let signStr = paramArr.join('&');
         if (hashType && hashType === 'sha256') {
-            return crypto.createHmac('sha256', secretKey).update(temp).digest('hex').toUpperCase();
+            return crypto.createHmac('sha256', secretKey).update(signStr).digest('hex').toUpperCase();
         }
-        return crypto.createHash('md5').update(temp += `&key=${secretKey}`).digest('hex').toUpperCase();
+        return crypto.createHash('md5').update(signStr += `&key=${secretKey}`).digest('hex').toUpperCase();
     }
 }
