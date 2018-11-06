@@ -39,11 +39,8 @@ export class WechatPayService {
         this.getSandboxSignKey();
     }
 
-
     /**
      * 获取沙箱秘钥
-     *
-     * @param mchId 商户号
      */
     private async getSandboxSignKey() {
         const params: any = {
