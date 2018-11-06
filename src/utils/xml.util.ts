@@ -8,7 +8,7 @@ export class XmlUtil {
      *
      * @param obj 对象
      */
-    async convertObjToXml(obj: {}) {
+    convertObjToXml(obj: {}) {
         return new xml2js.Builder({ rootName: 'xml' }).buildObject(obj);
     }
 

@@ -10,7 +10,7 @@ export class SignUtil {
      * @param secretKey 秘钥
      * @param hashType 签名方式(选填)，默认md5
      */
-    async wechatSign(params: {}, secretKey: string, hashType?: 'md5' | 'sha256') {
+    wechatSign(params: {}, secretKey: string, hashType?: 'md5' | 'sha256') {
         const paramArr: string[] = [];
         const sortedKeys = Object.keys(params).sort();
         for (const key of sortedKeys) {
