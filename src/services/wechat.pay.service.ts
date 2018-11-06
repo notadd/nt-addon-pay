@@ -10,7 +10,7 @@ import { XmlUtil } from '../utils/xml.util';
 @Injectable()
 export class WechatPayService implements OnModuleInit {
     /** API 接口域名 */
-    private apiBase = 'https://api.mch.weixin.qq.com';
+    private apiBase = 'https://api.mch.weixin.qq.com' + (this.payAddonConfig.sandbox ? '/sandbox' : '');
     /** 统一下单接口地址 */
     protected readonly unifiedOrderUrl = `${this.apiBase}/pay/unifiedorder`;
     /** 查询订单接口地址 */
@@ -34,9 +34,7 @@ export class WechatPayService implements OnModuleInit {
         @Inject(XmlUtil) protected readonly xmlUtil: XmlUtil,
         @Inject(SignUtil) protected readonly signUtil: SignUtil,
         @Inject(RandomUtil) protected readonly randomUtil: RandomUtil
-    ) {
-        this.payAddonConfig.sandbox && (this.apiBase += '/sandbox');
-    }
+    ) { }
 
     async onModuleInit() {
         const data = await this.getSandboxSignKey();
