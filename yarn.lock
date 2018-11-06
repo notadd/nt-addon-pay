@@ -39,6 +39,11 @@
     esm "^3.0.79"
     node-fetch "^2.2.0"
 
+"@types/chance@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@types/chance/-/chance-1.0.1.tgz#c10703020369602c40dd9428cc6e1437027116df"
+  integrity sha512-jtV6Bv/j+xk4gcXeLlESwNc/m/I/dIZA0xrt29g0uKcjyPob8iisj/5z0ARE+Ldfx4MxjNFNECG0z++J7zJgqg==
+
 "@types/events@*":
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/@types/events/-/events-1.2.0.tgz#81a6731ce4df43619e5c8c945383b3e62a89ea86"
@@ -363,6 +368,11 @@ chalk@^2.0.1, chalk@^2.3.0, chalk@^2.3.2, chalk@^2.4.1:
     ansi-styles "^3.2.1"
     escape-string-regexp "^1.0.5"
     supports-color "^5.3.0"
+
+chance@^1.0.16:
+  version "1.0.16"
+  resolved "https://registry.yarnpkg.com/chance/-/chance-1.0.16.tgz#bd61912716b0010c3dca8e3948a960efcaa7bb1b"
+  integrity sha512-2bgDHH5bVfAXH05SPtjqrsASzZ7h90yCuYT2z4mkYpxxYvJXiIydBFzVieVHZx7wLH1Ag2Azaaej2/zA1XUrNQ==
 
 chokidar@^2.0.4:
   version "2.0.4"
