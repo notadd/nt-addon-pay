@@ -17,8 +17,8 @@ export class XmlUtil {
      *
      * @param xml xml文本
      */
-    async parseObjFromXml(xml: any) {
-        return new Promise((resolve, reject) => {
+    async parseObjFromXml<T>(xml: any): Promise<T> {
+        return new Promise<T>((resolve, reject) => {
             xml2js.parseString(xml, { explicitRoot: false, explicitArray: false }, (error, result) => {
                 if (error) {
                     reject(error);
