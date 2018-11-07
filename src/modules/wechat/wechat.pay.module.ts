@@ -1,9 +1,8 @@
-import { HttpModule, Inject, Module, OnModuleInit } from '@nestjs/common';
+import { Inject, Module, OnModuleInit } from '@nestjs/common';
 import { existsSync, readFileSync, writeFileSync } from 'fs';
 import { join } from 'path';
 
 import { PayAddonConfig, PayAddonConfigProvider } from '../../common';
-import { SharedModule } from '../../shared/shared.module';
 import { WechatSandboxResponse } from './interfaces/sandbox.interface';
 import { WechatPayBaseService } from './services/wechat.pay.base.service';
 import { WechatPayOrderService } from './services/wechat.pay.order.service';
@@ -11,7 +10,7 @@ import { WechatRequestUtil } from './utils/request.util';
 import { WechatSignUtil } from './utils/sign.util';
 
 @Module({
-    imports: [HttpModule, SharedModule],
+    imports: [],
     providers: [
         WechatPayBaseService,
         WechatPayOrderService,
@@ -30,11 +29,10 @@ export class WechatPayModule implements OnModuleInit {
     ) { }
 
     async onModuleInit() {
-
         if (existsSync(join(__dirname, '../../../.sandbox_signkey.txt'))) {
             this.payAddonConfig.wechatConfig.secretKey = readFileSync(join(__dirname, '../../../.sandbox_signkey.txt')).toString();
         } else {
-            const data = await this.getWechatSandboxSignKey();
+            const data = await this.getSandboxSignKey();
             if (data.return_code === 'FAIL') {
                 throw new Error('微信支付获取沙箱环境秘钥时出现异常：' + data.retmsg);
             }
@@ -46,7 +44,7 @@ export class WechatPayModule implements OnModuleInit {
     /**
      * 获取微信支付沙箱环境秘钥
      */
-    private async getWechatSandboxSignKey() {
+    private async getSandboxSignKey() {
         return await this.wechatRequestUtil.post<WechatSandboxResponse>(this.sandboxGetSignKeyUrl, {});
     }
 }
