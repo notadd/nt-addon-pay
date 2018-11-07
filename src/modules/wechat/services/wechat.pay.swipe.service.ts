@@ -4,7 +4,7 @@ import { WechatSwipePayOrderReqParam, WechatSwipePayOrderRes } from '../interfac
 import { WechatPayBaseService } from './wechat.pay.base.service';
 
 @Injectable()
-export class WechatPayOrderService extends WechatPayBaseService {
+export class WechatPaySwipeService extends WechatPayBaseService {
     /**
      * 刷卡支付
      */
