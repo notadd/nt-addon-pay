@@ -1,6 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import * as xml2js from 'xml2js';
 
+/**
+ * XML 工具
+ */
 @Injectable()
 export class XmlUtil {
     /**

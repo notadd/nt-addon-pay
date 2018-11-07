@@ -1,6 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import * as chance from 'chance';
 
+/**
+ * 随机数工具
+ */
 @Injectable()
 export class RandomUtil {
     /**
