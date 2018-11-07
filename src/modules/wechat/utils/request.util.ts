@@ -1,11 +1,10 @@
 import { HttpService, Inject, Injectable } from '@nestjs/common';
 import { AxiosRequestConfig } from 'axios';
 
-import { PayAddonConfigProvider } from '../constants/addon.constant';
-import { PayAddonConfig } from '../interfaces/addon.config.interface';
-import { RandomUtil } from './random.util';
-import { SignUtil } from './sign.util';
-import { XmlUtil } from './xml.util';
+import { PayAddonConfig, PayAddonConfigProvider } from '../../../common';
+import { RandomUtil } from '../../../shared/utils/random.util';
+import { XmlUtil } from '../../../shared/utils/xml.util';
+import { WechatSignUtil } from './sign.util';
 
 /**
  * 微信支付接口请求工具
@@ -14,10 +13,10 @@ import { XmlUtil } from './xml.util';
 export class WechatRequestUtil {
     constructor(
         @Inject(HttpService) private readonly httpService: HttpService,
-        @Inject(PayAddonConfigProvider) protected readonly payAddonConfig: PayAddonConfig,
-        @Inject(XmlUtil) protected readonly xmlUtil: XmlUtil,
-        @Inject(SignUtil) protected readonly signUtil: SignUtil,
-        @Inject(RandomUtil) protected readonly randomUtil: RandomUtil
+        @Inject(PayAddonConfigProvider) private readonly payAddonConfig: PayAddonConfig,
+        @Inject(XmlUtil) private readonly xmlUtil: XmlUtil,
+        @Inject(WechatSignUtil) private readonly signUtil: WechatSignUtil,
+        @Inject(RandomUtil) private readonly randomUtil: RandomUtil
     ) { }
 
     /**
@@ -32,7 +31,7 @@ export class WechatRequestUtil {
         params.appid = wechatConfig.appid;
         params.mch_id = wechatConfig.mch_id;
         params.nonce_str = this.randomUtil.genRandomStr();
-        params.sign = this.signUtil.wechatSign(params, wechatConfig.secretKey, wechatConfig.sign_type);
+        params.sign = this.signUtil.sign(params, wechatConfig.secretKey, wechatConfig.sign_type);
         try {
             const { data } = await this.httpService.post<T>(url, this.xmlUtil.convertObjToXml(params), config).toPromise();
             return this.xmlUtil.parseObjFromXml<T>(data);

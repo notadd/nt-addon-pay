@@ -1,8 +1,8 @@
 import { Inject, Injectable } from '@nestjs/common';
 
-import { PayAddonConfigProvider } from '../constants/addon.constant';
-import { PayAddonConfig } from '../interfaces/addon.config.interface';
-import { WechatRequestUtil } from '../utils/wechat.request.util';
+import { PayAddonConfig, PayAddonConfigProvider } from '../../../common';
+import { WechatRequestUtil } from '../utils/request.util';
+
 
 @Injectable()
 export class WechatPayBaseService {

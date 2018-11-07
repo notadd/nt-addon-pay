@@ -2,10 +2,10 @@ import { Injectable } from '@nestjs/common';
 import * as crypto from 'crypto';
 
 /**
- * 签名工具
+ * 微信签名工具
  */
 @Injectable()
-export class SignUtil {
+export class WechatSignUtil {
     /**
      * 计算微信支付签名
      *
@@ -13,7 +13,7 @@ export class SignUtil {
      * @param secretKey 秘钥
      * @param hashType 签名方式(选填)，默认MD5
      */
-    wechatSign(params: {}, secretKey: string, hashType?: 'MD5' | 'HMAC-SHA256') {
+    sign(params: {}, secretKey: string, hashType?: 'MD5' | 'HMAC-SHA256') {
         const paramArr: string[] = [];
         const sortedKeys = Object.keys(params).sort();
         for (const key of sortedKeys) {

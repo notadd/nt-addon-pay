@@ -1,5 +1,5 @@
 /** 微信支付下单接口基础输入参数 */
-interface BaseOrderRequestParam {
+interface WechatBaseOrderRequestParam {
     /** 设备号 */
     device_info?: string;
     /** 商户订单号 */
@@ -29,7 +29,7 @@ interface BaseOrderRequestParam {
 }
 
 /** 交易类型 */
-export enum TradeType {
+export enum WechatTradeType {
     /** 公众号、小程序支付 */
     JSAPI = 'JSAPI',
     /** 扫码支付 */
@@ -41,21 +41,21 @@ export enum TradeType {
 }
 
 /** 刷卡支付下单接口输入参数 */
-export interface SwipePayOrderReqParam extends BaseOrderRequestParam {
+export interface WechatSwipePayOrderReqParam extends WechatBaseOrderRequestParam {
     /** 授权码 */
     auth_code: string;
 }
 
 /** APP支付下单接口输入参数 */
-export interface AppPayOrderReqParam extends BaseOrderRequestParam {
+export interface WechatAppPayOrderReqParam extends WechatBaseOrderRequestParam {
     /** 交易类型 */
-    trade_type: TradeType;
+    trade_type: WechatTradeType;
     /** 通知地址 */
     notify_url: string;
 }
 
 /** 扫码支付、公众号支付、H5支付、小程序支付下单接口输入参数 */
-export interface OtherPayOrderReqParam extends AppPayOrderReqParam {
+export interface WechatOtherPayOrderReqParam extends WechatAppPayOrderReqParam {
     /** 商品ID，交易类型为NATIVE(扫码支付)时必传 */
     product_id?: string;
     /** 用户标识 */
@@ -63,7 +63,7 @@ export interface OtherPayOrderReqParam extends AppPayOrderReqParam {
 }
 
 /** 微信支付下单接口基础返回结果 */
-interface BaseOrderResponse {
+interface WechatBaseOrderResponse {
     /** 返回状态码 */
     return_code: string;
     /** 返回信息 */
@@ -87,7 +87,7 @@ interface BaseOrderResponse {
 }
 
 /** 刷卡支付下单接口返回结果 */
-export interface SwipePayOrderRes extends BaseOrderResponse {
+export interface WechatSwipePayOrderRes extends WechatBaseOrderResponse {
     /** 用户标识 */
     openid: string;
     /** 是否关注公众账号 */
@@ -121,7 +121,7 @@ export interface SwipePayOrderRes extends BaseOrderResponse {
 }
 
 /** APP支付下单接口返回结果 */
-export interface AppPayOrderRes extends BaseOrderResponse {
+export interface WechatAppPayOrderRes extends WechatBaseOrderResponse {
     /** 交易类型 */
     trade_type: string;
     /** 预支付交易会话标识 */
@@ -129,13 +129,13 @@ export interface AppPayOrderRes extends BaseOrderResponse {
 }
 
 /** H5支付下单接口返回结果 */
-export interface H5PayOrderRs extends AppPayOrderRes {
+export interface WechatH5PayOrderRs extends WechatAppPayOrderRes {
     /** 支付跳转链接，有效期为5分钟 */
     mweb_url: string;
 }
 
 /** 扫码支付、公众号支付、小程序支付下单接口返回结果 */
-export interface OtherPayOrderRes extends AppPayOrderRes {
+export interface WechatOtherPayOrderRes extends WechatAppPayOrderRes {
     /** 二维码连接 */
     code_url?: string;
 }
