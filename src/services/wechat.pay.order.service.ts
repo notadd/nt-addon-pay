@@ -1,18 +1,15 @@
-import { Injectable, OnModuleInit } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 
-import { SwipePayOrderReqParam } from '../interfaces/order.interface';
-import { WechatPayService } from './wechat.pay.service';
+import { SwipePayOrderReqParam, SwipePayOrderRes } from '../interfaces/order.interface';
+import { WechatPayBaseService } from './wechat.pay.base.service';
 
 @Injectable()
-export class WechatPayOrderService extends WechatPayService implements OnModuleInit {
+export class WechatPayOrderService extends WechatPayBaseService {
     /**
      * 刷卡支付
      */
     async swipePay(params: SwipePayOrderReqParam) {
-        // 待测试
         const url = 'https://api.mch.weixin.qq.com/pay/micropay';
-        params.sign = this.signUtil.wechatSign(params, this.payAddonConfig.secretKey);
-        params.nonce_str = this.randomUtil.genRandomStr();
-        const { data } = await this.httpService.post(url, this.xmlUtil.convertObjToXml(params)).toPromise();
+        return await this.requestUtil.post<SwipePayOrderRes>(url, params);
     }
 }
