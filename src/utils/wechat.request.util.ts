@@ -37,7 +37,7 @@ export class WechatRequestUtil {
             const { data } = await this.httpService.post<T>(url, this.xmlUtil.convertObjToXml(params), config).toPromise();
             return this.xmlUtil.parseObjFromXml<T>(data);
         } catch (error) {
-            throw new Error('微信支付请求接口时出现网络异常:' + error.toString());
+            throw new Error('微信支付请求接口时出现网络异常：' + error.toString());
         }
     }
 }
