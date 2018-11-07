@@ -1,0 +1,26 @@
+/** 微信支付初始化配置 */
+interface PayAddonWechatConfig {
+    /** 公众账号APPID或应用APPID */
+    appid: string;
+    /** 微信支付商户号 */
+    mch_id: string;
+    /** 微信支付交易秘钥 */
+    secretKey: string;
+    /** 微信支付签名类型，默认MD5 */
+    sign_type?: 'MD5' | 'HMAC-SHA256';
+    /** 微信支付启用沙箱环境，默认false */
+    sandbox?: boolean;
+}
+
+/** 支付宝支付初始化配置 */
+interface PayAddonAliConfig {
+
+}
+
+/** 支付插件初始化配置 */
+export interface PayAddonConfig {
+    /** 微信支付初始化配置 */
+    wechatConfig?: PayAddonWechatConfig;
+    /** 支付宝支付初始化配置 */
+    aliConfig?: PayAddonAliConfig;
+}
