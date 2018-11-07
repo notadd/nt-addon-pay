@@ -5,7 +5,7 @@ import { join } from 'path';
 import { PayAddonConfig, PayAddonConfigProvider } from '../../common';
 import { WechatSandboxResponse } from './interfaces/sandbox.interface';
 import { WechatPayBaseService } from './services/wechat.pay.base.service';
-import { WechatPayOrderService } from './services/wechat.pay.order.service';
+import { WechatPaySwipeService } from './services/wechat.pay.swipe.service';
 import { WechatRequestUtil } from './utils/request.util';
 import { WechatSignUtil } from './utils/sign.util';
 
@@ -13,7 +13,7 @@ import { WechatSignUtil } from './utils/sign.util';
     imports: [],
     providers: [
         WechatPayBaseService,
-        WechatPayOrderService,
+        WechatPaySwipeService,
         WechatSignUtil,
         WechatRequestUtil
     ],
