@@ -30,7 +30,7 @@ export class WechatPayBaseService {
     protected readonly downloadFundFlowUrl = `${this.apiBase}/pay/downloadfundflow`;
 
     constructor(
-        @Inject(PayAddonConfigProvider) private readonly payAddonConfig: PayAddonConfig,
+        @Inject(PayAddonConfigProvider) protected readonly payAddonConfig: PayAddonConfig,
         @Inject(WechatRequestUtil) protected readonly requestUtil: WechatRequestUtil
     ) { }
 
