@@ -28,7 +28,7 @@ interface WechatBaseOrderRequestParam {
     scene_info?: string;
 }
 
-/** 交易类型 */
+/** 微信支付交易类型 */
 export enum WechatTradeType {
     /** 公众号、小程序支付 */
     JSAPI = 'JSAPI',
@@ -40,13 +40,13 @@ export enum WechatTradeType {
     MWEB = 'MWEB',
 }
 
-/** 刷卡支付下单接口输入参数 */
+/** 微信刷卡支付下单接口输入参数 */
 export interface WechatSwipePayOrderReqParam extends WechatBaseOrderRequestParam {
     /** 授权码 */
     auth_code: string;
 }
 
-/** APP支付下单接口输入参数 */
+/** 微信APP支付下单接口输入参数 */
 export interface WechatAppPayOrderReqParam extends WechatBaseOrderRequestParam {
     /** 交易类型 */
     trade_type: WechatTradeType;
@@ -54,7 +54,7 @@ export interface WechatAppPayOrderReqParam extends WechatBaseOrderRequestParam {
     notify_url: string;
 }
 
-/** 扫码支付、公众号支付、H5支付、小程序支付下单接口输入参数 */
+/** 微信扫码支付、公众号支付、H5支付、小程序支付下单接口输入参数 */
 export interface WechatOtherPayOrderReqParam extends WechatAppPayOrderReqParam {
     /** 商品ID，交易类型为NATIVE(扫码支付)时必传 */
     product_id?: string;
@@ -62,8 +62,8 @@ export interface WechatOtherPayOrderReqParam extends WechatAppPayOrderReqParam {
     openid?: string;
 }
 
-/** 微信支付下单接口基础返回结果 */
-interface WechatBaseOrderResponse {
+/** 微信支付接口基础返回结果 */
+interface WechatBaseResponse {
     /** 返回状态码 */
     return_code: string;
     /** 返回信息 */
@@ -86,11 +86,11 @@ interface WechatBaseOrderResponse {
     err_code_des?: string;
 }
 
-/** 刷卡支付下单接口返回结果 */
-export interface WechatSwipePayOrderRes extends WechatBaseOrderResponse {
+/** 微信刷卡支付下单接口返回结果 */
+export interface WechatSwipePayOrderRes extends WechatBaseResponse {
     /** 用户标识 */
     openid: string;
-    /** 是否关注公众账号 */
+    /** 是否关注公众账号，Y-关注，N-未关注 */
     is_subscribe: string;
     /** 交易类型 */
     trade_type: string;
@@ -120,22 +120,79 @@ export interface WechatSwipePayOrderRes extends WechatBaseOrderResponse {
     promotion_detail?: string;
 }
 
-/** APP支付下单接口返回结果 */
-export interface WechatAppPayOrderRes extends WechatBaseOrderResponse {
+/** 微信APP支付下单接口返回结果 */
+export interface WechatAppPayOrderRes extends WechatBaseResponse {
     /** 交易类型 */
     trade_type: string;
     /** 预支付交易会话标识 */
     prepay_id: string;
 }
 
-/** H5支付下单接口返回结果 */
-export interface WechatH5PayOrderRs extends WechatAppPayOrderRes {
+/** 微信H5支付下单接口返回结果 */
+export interface WechatH5PayOrderRes extends WechatAppPayOrderRes {
     /** 支付跳转链接，有效期为5分钟 */
     mweb_url: string;
 }
 
-/** 扫码支付、公众号支付、小程序支付下单接口返回结果 */
+/** 微信扫码支付、公众号支付、小程序支付下单接口返回结果 */
 export interface WechatOtherPayOrderRes extends WechatAppPayOrderRes {
     /** 二维码连接 */
     code_url?: string;
 }
+
+/** 微信支付查询订单接口基础请求参数 */
+export interface WechatBaseQueryOrderReqParam {
+    /** 微信订单号 */
+    transaction_id: string;
+    /** 商户订单号 */
+    out_trade_no: string;
+}
+
+/** 微信支付查询订单接口基础返回结果 */
+export interface WechatBaseQueryOrderRes extends WechatBaseResponse {
+    /** 设备号 */
+    device_info?: string;
+    /** 用户标识 */
+    openid: string;
+    /** 是否关注公众账号，Y-关注，N-未关注 */
+    is_subscribe: string;
+    /** 交易类型 */
+    trade_type: string;
+    /** 交易状态 */
+    trade_state: string;
+    /** 付款银行 */
+    bank_type: string;
+    /** 总金额 */
+    total_fee: string;
+    /** 应结订单金额 */
+    settlement_total_fee?: string;
+    /** 标价币种，默认人民币：CNY */
+    fee_type?: string;
+    /** 现金支付金额 */
+    cash_fee: string;
+    /** 现金支付币种 */
+    cash_fee_type?: string;
+    /** 代金券金额 */
+    coupon_fee?: string;
+    /** 代金券使用数量 */
+    coupon_count?: string;
+    /** 微信支付订单号 */
+    transaction_id: string;
+    /** 商户订单号 */
+    out_trade_no: string;
+    /** 附加数据 */
+    attach?: string;
+    /** 支付完成时间 */
+    time_end: string;
+    /** 交易状态描述 */
+    trade_state_desc: string;
+}
+
+/** 微信支付关闭订单接口基础请求参数 */
+export interface WechatBaseCloseOrderReqParam {
+    /** 商户订单号 */
+    out_trade_no: string;
+}
+
+/** 微信支付关闭订单接口基础返回结果 */
+export interface WechatBaseCloseOrderRes extends WechatBaseResponse { }
