@@ -34,6 +34,9 @@ export class WechatRequestUtil {
         params.sign = this.signUtil.sign(params, wechatConfig.secretKey, wechatConfig.sign_type);
         try {
             const { data } = await this.httpService.post<T>(url, this.xmlUtil.convertObjToXml(params), config).toPromise();
+            if ((data as any).return_code === 'SUCCESS') {
+                if (params.sign !== (data as any).sign) throw new Error('微信支付接口返回签名有误');
+            }
             return this.xmlUtil.parseObjFromXml<T>(data);
         } catch (error) {
             throw new Error('微信支付请求接口时出现网络异常：' + error.toString());
