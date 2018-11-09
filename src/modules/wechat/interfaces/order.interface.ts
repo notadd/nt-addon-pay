@@ -12,8 +12,6 @@ interface WechatBaseOrderRequestParam {
     attach?: string;
     /** 订单金额，单位为分，只能为整数 */
     total_fee: number;
-    /** 货币类型，默认人民币：CNY */
-    fee_type?: string;
     /** 指定支付方式 */
     limit_pay?: string;
     /** 终端IP */
