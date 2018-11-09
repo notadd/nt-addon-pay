@@ -1,4 +1,4 @@
-/** 微信支付下单接口基础输入参数 */
+/** 微信支付下单接口基础请求参数 */
 interface WechatBaseOrderRequestParam {
     /** 设备号 */
     device_info?: string;
@@ -40,13 +40,13 @@ export enum WechatTradeType {
     MWEB = 'MWEB',
 }
 
-/** 微信刷卡支付下单接口输入参数 */
+/** 微信刷卡支付下单接口请求参数 */
 export interface WechatSwipePayOrderReqParam extends WechatBaseOrderRequestParam {
     /** 授权码 */
     auth_code: string;
 }
 
-/** 微信APP支付下单接口输入参数 */
+/** 微信APP支付下单接口请求参数 */
 export interface WechatAppPayOrderReqParam extends WechatBaseOrderRequestParam {
     /** 交易类型 */
     trade_type: WechatTradeType;
@@ -54,7 +54,7 @@ export interface WechatAppPayOrderReqParam extends WechatBaseOrderRequestParam {
     notify_url: string;
 }
 
-/** 微信扫码支付、公众号支付、H5支付、小程序支付下单接口输入参数 */
+/** 微信扫码支付、公众号支付、H5支付、小程序支付下单接口请求参数 */
 export interface WechatOtherPayOrderReqParam extends WechatAppPayOrderReqParam {
     /** 商品ID，交易类型为NATIVE(扫码支付)时必传 */
     product_id?: string;
