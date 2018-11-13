@@ -32,7 +32,7 @@ describe('WechatPayAppService', () => {
                 notify_url: '127.0.0.1',
                 trade_type: WechatTradeType.APP
             });
-            expect(res.return_code).toBe('SUCCESS');
+            expect(res.result_code).toBe('SUCCESS');
         });
 
         it('should return fail', async () => {
@@ -45,6 +45,53 @@ describe('WechatPayAppService', () => {
                 trade_type: WechatTradeType.APP
             });
             expect(res.return_code).toBe('FAIL');
+        });
+    });
+
+    describe('queryOrder', () => {
+        it('should return success', async () => {
+            const res = await wechatPayAppService.queryOrder({
+                out_trade_no: '201811011926123'
+            });
+            expect(res.result_code).toBe('SUCCESS');
+        });
+
+        it('should return fail', async () => {
+            const res = await wechatPayAppService.queryOrder({
+                out_trade_no: '201811011926124'
+            });
+            expect(res.result_code).toBe('FAIL');
+        });
+    });
+
+    describe('closeOrder', () => {
+        it('should return success', async () => {
+            const res = await wechatPayAppService.closeOrder({
+                out_trade_no: '201811011926123'
+            });
+            expect(res.return_code).toBe('SUCCESS');
+        });
+    });
+
+    describe('refund', () => {
+        it('should return success', async () => {
+            const res = await wechatPayAppService.refund({
+                out_trade_no: '201811011926123',
+                out_refund_no: '201811011926123refund',
+                total_fee: 301,
+                refund_fee: 1
+            });
+            expect(res.result_code).toBe('SUCCESS');
+        });
+    });
+
+    describe('queryRefund', () => {
+        it('should return success', async () => {
+            const res = await wechatPayAppService.queryRefund({
+                out_trade_no: '201811011926123',
+                out_refund_no: '201811011926123refund'
+            });
+            expect(res.result_code).toBe('SUCCESS');
         });
     });
 });
