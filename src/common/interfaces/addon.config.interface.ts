@@ -1,3 +1,5 @@
+import { PathLike } from 'fs';
+
 /** 微信支付初始化配置 */
 interface PayAddonWechatConfig {
     /** 公众账号APPID或应用APPID */
@@ -6,6 +8,8 @@ interface PayAddonWechatConfig {
     mch_id: string;
     /** 微信支付交易秘钥 */
     secretKey: string;
+    /** 商户证书路径 */
+    certificatePath: PathLike;
     /** 微信支付签名类型，默认MD5 */
     sign_type?: 'MD5' | 'HMAC-SHA256';
     /** 微信支付启用沙箱环境，默认false */

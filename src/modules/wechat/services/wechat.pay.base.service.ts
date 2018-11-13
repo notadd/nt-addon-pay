@@ -1,9 +1,8 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { readFileSync } from 'fs';
 import { Agent } from 'https';
-import { join } from 'path';
 
 import { PayAddonConfig, PayAddonConfigProvider } from '../../../common';
+import { WechatCertificateAgentProvider } from '../constants/wechat.constant';
 import {
     WechatBaseCloseOrderReqParam,
     WechatBaseCloseOrderRes,
@@ -39,6 +38,7 @@ export class WechatPayBaseService {
 
     constructor(
         @Inject(PayAddonConfigProvider) protected readonly payAddonConfig: PayAddonConfig,
+        @Inject(WechatCertificateAgentProvider) protected readonly certificateAgent: Agent,
         @Inject(WechatRequestUtil) protected readonly requestUtil: WechatRequestUtil
     ) { }
 
@@ -71,8 +71,7 @@ export class WechatPayBaseService {
     public async refund(params: WechatBaseRefundReqParam): Promise<WechatBaseRefundRes> {
         if (!params.out_trade_no && !params.transaction_id) throw new Error('参数有误，out_trade_no 和 transaction_id 二选一');
         this.checkOverrideDefaultSignType(params);
-        const httpsAgent = this.createCertificateAgent();
-        return await this.requestUtil.post<WechatBaseRefundRes>(this.refundUrl, params, { httpsAgent });
+        return await this.requestUtil.post<WechatBaseRefundRes>(this.refundUrl, params, { httpsAgent: this.certificateAgent });
     }
 
     /**
@@ -85,18 +84,6 @@ export class WechatPayBaseService {
             throw new Error('参数有误，out_trade_no、transaction_id、out_refund_no 和 refund_id 四选一');
         }
         return await this.requestUtil.post<WechatBaseQueryRefundRes>(this.queryOrderUrl, params);
-    }
-
-    /**
-     * 创建请求证书代理
-     *
-     * 此 agent 仅用于申请退款、撤销订单和下载资金账单接口
-     */
-    protected createCertificateAgent(): Agent {
-        return new Agent({
-            pfx: readFileSync(join(__dirname, '../../../../certificate/keep_me_security.p12')),
-            passphrase: this.payAddonConfig.wechatConfig.mch_id
-        });
     }
 
     /**

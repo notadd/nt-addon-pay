@@ -14,6 +14,7 @@ describe('WechatPayAppService', () => {
                     appid: 'appid',
                     mch_id: 'mch_id',
                     secretKey: 'secretKey',
+                    certificatePath: '',
                     sandbox: true
                 }
             })]
