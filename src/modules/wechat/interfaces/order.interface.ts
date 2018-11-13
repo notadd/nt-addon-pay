@@ -1,3 +1,5 @@
+import { WechatBaseResponse } from './base.interface';
+
 /** 微信支付下单接口基础请求参数 */
 interface WechatBaseOrderRequestParam {
     /** 设备号 */
@@ -60,30 +62,6 @@ export interface WechatOtherPayOrderReqParam extends WechatAppPayOrderReqParam {
     openid?: string;
 }
 
-/** 微信支付接口基础返回结果 */
-interface WechatBaseResponse {
-    /** 返回状态码 */
-    return_code: string;
-    /** 返回信息 */
-    return_msg: string;
-    /** 公众账号APPID或应用APPID */
-    appid: string;
-    /** 商户号 */
-    mch_id: string;
-    /** 设备号 */
-    device_info?: string;
-    /** 随机字符串 */
-    nonce_str: string;
-    /** 签名 */
-    sign: string;
-    /** 业务结果 */
-    result_code: string;
-    /** 错误代码 */
-    err_code?: string;
-    /** 错误代码描述 */
-    err_code_des?: string;
-}
-
 /** 微信刷卡支付下单接口返回结果 */
 export interface WechatSwipePayOrderRes extends WechatBaseResponse {
     /** 用户标识 */
@@ -104,7 +82,7 @@ export interface WechatSwipePayOrderRes extends WechatBaseResponse {
     coupon_fee?: number;
     /** 现金支付货币类型，默认人民币：CNY */
     cash_fee_type?: number;
-    /** 现金支付金额 */
+    /** 现金支付金额，单位为分 */
     cash_fee: number;
     /** 微信支付订单号 */
     transaction_id: string;
@@ -140,10 +118,10 @@ export interface WechatOtherPayOrderRes extends WechatAppPayOrderRes {
 
 /** 微信支付查询订单接口基础请求参数 */
 export interface WechatBaseQueryOrderReqParam {
-    /** 微信订单号 */
-    transaction_id: string;
+    /** 微信订单号，优先使用 */
+    transaction_id?: string;
     /** 商户订单号 */
-    out_trade_no: string;
+    out_trade_no?: string;
 }
 
 /** 微信支付查询订单接口基础返回结果 */
@@ -166,7 +144,7 @@ export interface WechatBaseQueryOrderRes extends WechatBaseResponse {
     settlement_total_fee?: string;
     /** 标价币种，默认人民币：CNY */
     fee_type?: string;
-    /** 现金支付金额 */
+    /** 现金支付金额，单位为分 */
     cash_fee: string;
     /** 现金支付币种 */
     cash_fee_type?: string;
