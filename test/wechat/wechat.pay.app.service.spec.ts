@@ -1,4 +1,5 @@
 import { Test } from '@nestjs/testing';
+import * as fs from 'fs';
 
 import { WechatTradeType } from '../../src/modules/wechat/interfaces/order.interface';
 import { WechatPayAppService } from '../../src/modules/wechat/services/wechat.pay.app.service';
@@ -14,7 +15,7 @@ describe('WechatPayAppService', () => {
                     appid: 'appid',
                     mch_id: 'mch_id',
                     secretKey: 'secretKey',
-                    certificatePath: '',
+                    pfx: fs.readFileSync('path_to_p12_file'),
                     sandbox: true
                 }
             })]
