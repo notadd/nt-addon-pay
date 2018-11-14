@@ -1,9 +1,10 @@
 import { Inject, Module, OnModuleInit } from '@nestjs/common';
-import { existsSync, readFileSync, writeFileSync } from 'fs';
-import { join } from 'path';
+import * as fs from 'fs';
+import * as path from 'path';
 
 import { PayAddonConfig, PayAddonConfigProvider } from '../../common';
 import { WechatSandboxResponse } from './interfaces/sandbox.interface';
+import { WechatPayAppService } from './services/wechat.pay.app.service';
 import { WechatPayBaseService } from './services/wechat.pay.base.service';
 import { WechatPaySwipeService } from './services/wechat.pay.swipe.service';
 import { WechatRequestUtil } from './utils/request.util';
@@ -13,6 +14,7 @@ import { WechatSignUtil } from './utils/sign.util';
     imports: [],
     providers: [
         WechatPayBaseService,
+        WechatPayAppService,
         WechatPaySwipeService,
         WechatSignUtil,
         WechatRequestUtil
@@ -29,14 +31,14 @@ export class WechatPayModule implements OnModuleInit {
     ) { }
 
     async onModuleInit() {
-        if (existsSync(join(__dirname, '../../../.sandbox_signkey.txt'))) {
-            this.payAddonConfig.wechatConfig.secretKey = readFileSync(join(__dirname, '../../../.sandbox_signkey.txt')).toString();
+        if (fs.existsSync(path.join(__dirname, '.sandbox_signkey.txt'))) {
+            this.payAddonConfig.wechatConfig.secretKey = fs.readFileSync(path.join(__dirname, '.sandbox_signkey.txt')).toString();
         } else {
             const data = await this.getSandboxSignKey();
             if (data.return_code === 'FAIL') {
                 throw new Error('微信支付获取沙箱环境秘钥时出现异常：' + data.retmsg);
             }
-            writeFileSync(join(__dirname, '../../../.sandbox_signkey.txt'), data.sandbox_signkey);
+            fs.writeFileSync(path.join(__dirname, '.sandbox_signkey.txt'), data.sandbox_signkey);
             this.payAddonConfig.wechatConfig.secretKey = data.sandbox_signkey;
         }
     }

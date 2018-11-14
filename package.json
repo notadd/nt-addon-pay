@@ -1,6 +1,6 @@
 {
     "name": "nt-addon-pay",
-    "version": "1.0.0",
+    "version": "0.0.1",
     "description": "The pay addon for notadd application.",
     "scripts": {
         "start": "ts-node -r tsconfig-paths/register starter/main.ts",
@@ -8,7 +8,9 @@
         "debug": "node --inspect-brk -r ts-node/register starter/main.ts",
         "debug:watch": "nodemon --config nodemon-debug.json",
         "check": "tslint -p tsconfig.json -c tslint.json",
-        "fix": "tslint -p tsconfig.json -c tslint.json --fix"
+        "fix": "tslint -p tsconfig.json -c tslint.json --fix",
+        "test": "jest",
+        "test:cov": "jest --coverage"
     },
     "author": "notadd",
     "license": "Apache-2.0",
@@ -22,12 +24,30 @@
         "xml2js": "^0.4.19"
     },
     "devDependencies": {
+        "@nestjs/testing": "^5.4.0",
         "@types/chance": "^1.0.1",
+        "@types/jest": "^23.3.9",
         "@types/node": "^10.12.0",
         "@types/xml2js": "^0.4.3",
+        "jest": "^23.6.0",
         "nodemon": "^1.18.4",
+        "ts-jest": "^23.10.4",
         "ts-node": "^7.0.1",
         "tsconfig-paths": "^3.6.0",
         "tslint": "^5.11.0"
+    },
+    "jest": {
+        "moduleFileExtensions": [
+            "js",
+            "json",
+            "ts"
+        ],
+        "rootDir": "test",
+        "testRegex": ".spec.ts$",
+        "transform": {
+            "^.+\\.(t|j)s$": "ts-jest"
+        },
+        "coverageDirectory": "../coverage",
+        "testEnvironment": "node"
     }
 }

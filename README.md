@@ -30,8 +30,8 @@ TODO
 ## Roadmap
 
 - [x] **0.0.1** 贡献说明
-- [ ] **0.1.0** 微信-普通商户版-APP支付([@dzzzzzy](https://github.com/dzzzzzy) 实现中)
-- [ ] **0.2.0** 支付宝-APP支付
+- [x] **0.1.0** 微信-普通商户版-APP支付([@dzzzzzy](https://github.com/dzzzzzy))
+- [ ] **0.2.0** 支付宝-APP支付([@dzzzzzy](https://github.com/dzzzzzy) 实现中)
 - [ ] **0.3.0** 微信-普通商户版-刷卡支付([@zhuangpeng](https://github.com/zhuangpeng) 实现中)
 - [ ] **0.3.0** 支付宝-当面付
 - [ ] **0.4.0** 微信-普通商户版-扫码支付
