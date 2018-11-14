@@ -1,5 +1,5 @@
 import { HttpService, Inject, Injectable } from '@nestjs/common';
-import { AxiosRequestConfig } from 'axios';
+import * as axios from 'axios';
 
 import { PayAddonConfig, PayAddonConfigProvider } from '../../../common';
 import { RandomUtil } from '../../../shared/utils/random.util';
@@ -26,7 +26,7 @@ export class WechatRequestUtil {
      * @param params 请求参数
      * @param config AxiosRequestConfig
      */
-    async post<T>(url: string, params: any, config?: AxiosRequestConfig): Promise<T> {
+    async post<T>(url: string, params: any, config?: axios.AxiosRequestConfig): Promise<T> {
         const wechatConfig = this.payAddonConfig.wechatConfig;
         params.appid = wechatConfig.appid;
         params.mch_id = wechatConfig.mch_id;

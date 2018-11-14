@@ -1,6 +1,5 @@
 import { DynamicModule, Global, HttpModule, Module } from '@nestjs/common';
-import { existsSync, PathLike, readFileSync } from 'fs';
-import { Agent } from 'https';
+import * as https from 'https';
 
 import { PayAddonConfig, PayAddonConfigProvider } from '../common';
 import { WechatCertificateAgentProvider } from '../modules/wechat/constants/wechat.constant';
@@ -11,7 +10,7 @@ import { XmlUtil } from './utils/xml.util';
 @Module({})
 export class SharedModule {
     static forFeature(config: PayAddonConfig): DynamicModule {
-        const certificate = this.createCertificateAgent(config.wechatConfig.certificatePath, config.wechatConfig.mch_id);
+        const pfx = this.createCertificateAgent(config.wechatConfig.pfx, config.wechatConfig.mch_id);
         return {
             module: SharedModule,
             imports: [HttpModule],
@@ -19,7 +18,7 @@ export class SharedModule {
                 XmlUtil,
                 RandomUtil,
                 { provide: PayAddonConfigProvider, useValue: config },
-                { provide: WechatCertificateAgentProvider, useValue: certificate }
+                { provide: WechatCertificateAgentProvider, useValue: pfx }
             ],
             exports: [HttpModule, RandomUtil, XmlUtil, PayAddonConfigProvider, WechatCertificateAgentProvider]
         };
@@ -30,10 +29,10 @@ export class SharedModule {
      *
      * 此 agent 仅用于微信支付的申请退款、撤销订单和下载资金账单接口
      */
-    private static createCertificateAgent(certificatePath: PathLike, mchId: string): Agent {
-        if (!existsSync(certificatePath)) throw Error('读取商户证书失败，请检查商户证书路径是否正确');
-        return new Agent({
-            pfx: readFileSync(certificatePath),
+    private static createCertificateAgent(pfx: Buffer, mchId: string): https.Agent {
+        if (!pfx) throw Error('读取商户证书失败');
+        return new https.Agent({
+            pfx,
             passphrase: mchId
         });
     }

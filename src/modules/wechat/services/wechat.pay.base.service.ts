@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { Agent } from 'https';
+import * as https from 'https';
 
 import { PayAddonConfig, PayAddonConfigProvider } from '../../../common';
 import { WechatCertificateAgentProvider } from '../constants/wechat.constant';
@@ -38,7 +38,7 @@ export class WechatPayBaseService {
 
     constructor(
         @Inject(PayAddonConfigProvider) protected readonly payAddonConfig: PayAddonConfig,
-        @Inject(WechatCertificateAgentProvider) protected readonly certificateAgent: Agent,
+        @Inject(WechatCertificateAgentProvider) protected readonly certificateAgent: https.Agent,
         @Inject(WechatRequestUtil) protected readonly requestUtil: WechatRequestUtil
     ) { }
 
