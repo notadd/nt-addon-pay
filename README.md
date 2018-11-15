@@ -11,9 +11,9 @@ TODO
 我们欢迎 Nest.js 使用者来参与这个插件的开发，作为一个贡献者，请您遵循以下原则：
 
 - 代码提交规范，参考 [Git Commit Message Conventions](https://docs.google.com/document/d/1QrDFcIiPjSLDn3EL15IJygNPiHORgU1_OOAqWjiDU5Y/edit#)
-- 始终从 develop checkout 一个新分支，命名规范为 feature/xxx，xxx 必须具有可读性，如：微信-普通商户版-扫码支付 => feature/wechat-scan-pay
+- 始终从 develop checkout 一个新分支，命名规范为 feature/xxx，xxx 必须具有可读性，如：微信-普通商户版-扫码支付 => feature/wechat-native-pay
 - 在 checkout 新分支前，先在本地 develop 分支拉取远程 develop 分支的最新代码
-- 文件命名规则请参考项目目前的命名规则，如：order.interface.ts 代表所有订单相关的请求参数和返回结果的定义，wechat.pay.swipe.service.ts 代表刷卡支付的业务逻辑
+- 文件命名规则请参考项目目前的命名规则，如：微信支付中，order.interface.ts 代表所有订单相关的请求参数和返回结果的定义，swipe.pay.service.ts 代表付款码支付的业务逻辑
 
 ## 功能开发
 
@@ -32,7 +32,7 @@ TODO
 - [x] **0.0.1** 贡献说明
 - [x] **0.1.0** 微信-普通商户版-APP支付([@dzzzzzy](https://github.com/dzzzzzy))
 - [ ] **0.2.0** 支付宝-APP支付([@dzzzzzy](https://github.com/dzzzzzy) 实现中)
-- [ ] **0.3.0** 微信-普通商户版-刷卡支付([@zhuangpeng](https://github.com/zhuangpeng) 实现中)
+- [ ] **0.3.0** 微信-普通商户版-付款码支付([@zhuangpeng](https://github.com/zhuangpeng) 实现中)
 - [ ] **0.3.0** 支付宝-当面付
 - [ ] **0.4.0** 微信-普通商户版-扫码支付
 - [ ] **0.5.0** 微信-普通商户版-公众号支付
