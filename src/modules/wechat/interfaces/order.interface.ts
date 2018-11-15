@@ -22,7 +22,7 @@ interface WechatBaseOrderRequestParam {
     goods_tag?: string;
     /** 交易起始时间 */
     time_start?: string;
-    /** 交易结束时间 */
+    /** 交易结束时间，建议：最短失效时间间隔大于1分钟 */
     time_expire?: string;
     /** 场景信息 */
     scene_info?: string;
@@ -105,7 +105,7 @@ export interface WechatAppPayOrderRes extends WechatBaseResponse {
 }
 
 /** 微信H5支付下单接口返回结果 */
-export interface WechatH5PayOrderRes extends WechatAppPayOrderRes {
+export interface WechatWapPayOrderRes extends WechatAppPayOrderRes {
     /** 支付跳转链接，有效期为5分钟 */
     mweb_url: string;
 }
