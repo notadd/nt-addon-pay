@@ -22,7 +22,7 @@ interface WechatBaseOrderRequestParam {
     goods_tag?: string;
     /** 交易起始时间 */
     time_start?: string;
-    /** 交易结束时间 */
+    /** 交易结束时间，建议：最短失效时间间隔大于1分钟 */
     time_expire?: string;
     /** 场景信息 */
     scene_info?: string;

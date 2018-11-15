@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 
 import { WechatAppPayOrderReqParam, WechatAppPayOrderRes } from '../interfaces/order.interface';
-import { WechatPayBaseService } from './wechat.pay.base.service';
+import { WechatPayBaseService } from './base.service';
 
 @Injectable()
-export class WechatPayAppService extends WechatPayBaseService {
+export class WechatAppPayService extends WechatPayBaseService {
     /**
      * APP支付
      *

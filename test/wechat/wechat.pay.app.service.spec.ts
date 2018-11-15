@@ -2,11 +2,11 @@ import { Test } from '@nestjs/testing';
 import * as fs from 'fs';
 
 import { WechatTradeType } from '../../src/modules/wechat/interfaces/order.interface';
-import { WechatPayAppService } from '../../src/modules/wechat/services/wechat.pay.app.service';
+import { WechatAppPayService } from '../../src/modules/wechat/services/app.pay.service';
 import { PayAddon } from '../../src/pay.addon';
 
 describe('WechatPayAppService', () => {
-    let wechatPayAppService: WechatPayAppService;
+    let wechatAppPayService: WechatAppPayService;
 
     beforeEach(async () => {
         const testModule = await Test.createTestingModule({
@@ -21,12 +21,12 @@ describe('WechatPayAppService', () => {
             })]
         }).compile();
         await testModule.init();
-        wechatPayAppService = testModule.get<WechatPayAppService>(WechatPayAppService);
+        wechatAppPayService = testModule.get<WechatAppPayService>(WechatAppPayService);
     });
 
     describe('appPay', () => {
         it('should return success', async () => {
-            const res = await wechatPayAppService.appPay({
+            const res = await wechatAppPayService.appPay({
                 body: '测试APP支付',
                 out_trade_no: '201811011926123',
                 total_fee: 301,
@@ -38,7 +38,7 @@ describe('WechatPayAppService', () => {
         });
 
         it('should return fail', async () => {
-            const res = await wechatPayAppService.appPay({
+            const res = await wechatAppPayService.appPay({
                 body: '测试APP支付',
                 out_trade_no: '201811011926123',
                 total_fee: 0.1,
@@ -52,14 +52,14 @@ describe('WechatPayAppService', () => {
 
     describe('queryOrder', () => {
         it('should return success', async () => {
-            const res = await wechatPayAppService.queryOrder({
+            const res = await wechatAppPayService.queryOrder({
                 out_trade_no: '201811011926123'
             });
             expect(res.result_code).toBe('SUCCESS');
         });
 
         it('should return fail', async () => {
-            const res = await wechatPayAppService.queryOrder({
+            const res = await wechatAppPayService.queryOrder({
                 out_trade_no: '201811011926124'
             });
             expect(res.result_code).toBe('FAIL');
@@ -68,7 +68,7 @@ describe('WechatPayAppService', () => {
 
     describe('closeOrder', () => {
         it('should return success', async () => {
-            const res = await wechatPayAppService.closeOrder({
+            const res = await wechatAppPayService.closeOrder({
                 out_trade_no: '201811011926123'
             });
             expect(res.return_code).toBe('SUCCESS');
@@ -77,7 +77,7 @@ describe('WechatPayAppService', () => {
 
     describe('refund', () => {
         it('should return success', async () => {
-            const res = await wechatPayAppService.refund({
+            const res = await wechatAppPayService.refund({
                 out_trade_no: '201811011926123',
                 out_refund_no: '201811011926123refund',
                 total_fee: 301,
@@ -89,7 +89,7 @@ describe('WechatPayAppService', () => {
 
     describe('queryRefund', () => {
         it('should return success', async () => {
-            const res = await wechatPayAppService.queryRefund({
+            const res = await wechatAppPayService.queryRefund({
                 out_trade_no: '201811011926123',
                 out_refund_no: '201811011926123refund'
             });
