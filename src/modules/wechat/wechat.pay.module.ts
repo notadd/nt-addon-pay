@@ -5,8 +5,12 @@ import * as path from 'path';
 import { PayAddonConfig, PayAddonConfigProvider } from '../../common';
 import { WechatSandboxResponse } from './interfaces/sandbox.interface';
 import { WechatAppPayService } from './services/app.pay.service';
+import { WechatAppletPayService } from './services/applet.pay.service';
 import { WechatPayBaseService } from './services/base.service';
+import { WechatJSAPIPayService } from './services/jsapi.pay.service';
 import { WechatMicroPayService } from './services/micro.pay.service';
+import { WechatNativePayService } from './services/native.pay.service';
+import { WechatWapPayService } from './services/wap.pay.service';
 import { WechatRequestUtil } from './utils/request.util';
 import { WechatSignUtil } from './utils/sign.util';
 
@@ -15,7 +19,11 @@ import { WechatSignUtil } from './utils/sign.util';
     providers: [
         WechatPayBaseService,
         WechatAppPayService,
+        WechatAppletPayService,
+        WechatJSAPIPayService,
         WechatMicroPayService,
+        WechatNativePayService,
+        WechatWapPayService,
         WechatSignUtil,
         WechatRequestUtil
     ],
