@@ -4,7 +4,7 @@ import { WechatOtherPayOrderReqParam, WechatOtherPayOrderRes } from '../interfac
 import { WechatPayBaseService } from './base.service';
 
 /**
- * 微信支付-Native支付
+ * 微信支付-Native支付类
  */
 @Injectable()
 export class WechatNativePayService extends WechatPayBaseService {
