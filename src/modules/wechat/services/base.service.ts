@@ -17,6 +17,9 @@ import {
 } from '../interfaces/refund.interface';
 import { WechatRequestUtil } from '../utils/request.util';
 
+/**
+ * 微信支付
+ */
 @Injectable()
 export class WechatPayBaseService {
     /** API 接口域名 */

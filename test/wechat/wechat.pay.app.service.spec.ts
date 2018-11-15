@@ -24,9 +24,9 @@ describe('WechatPayAppService', () => {
         wechatAppPayService = testModule.get<WechatAppPayService>(WechatAppPayService);
     });
 
-    describe('appPay', () => {
+    describe('pay', () => {
         it('should return success', async () => {
-            const res = await wechatAppPayService.appPay({
+            const res = await wechatAppPayService.pay({
                 body: '测试APP支付',
                 out_trade_no: '201811011926123',
                 total_fee: 301,
@@ -38,7 +38,7 @@ describe('WechatPayAppService', () => {
         });
 
         it('should return fail', async () => {
-            const res = await wechatAppPayService.appPay({
+            const res = await wechatAppPayService.pay({
                 body: '测试APP支付',
                 out_trade_no: '201811011926123',
                 total_fee: 0.1,
