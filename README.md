@@ -31,7 +31,7 @@ TODO
 
 - [x] **0.0.1** 贡献说明
 - [x] **0.1.0** 微信-普通商户版-APP支付([@dzzzzzy](https://github.com/dzzzzzy))
-- [ ] **0.2.0** 微信-普通商户版-公众号支付、微信-普通商户版-扫码支付、微信-普通商户版-H5支付、微信-普通商户版-小程序支付([@dzzzzzy](https://github.com/dzzzzzy) 实现中)
+- [ ] **0.2.0** 微信-普通商户版-JSAPI支付、微信-普通商户版-Native支付、微信-普通商户版-H5支付、微信-普通商户版-小程序支付([@dzzzzzy](https://github.com/dzzzzzy) 实现中)
 - [ ] **0.3.0** 微信-普通商户版-付款码支付([@zhuangpeng](https://github.com/zhuangpeng) 实现中)
 - [ ] **0.4.0** 支付宝-APP支付
 - [ ] **0.5.0** 支付宝-当面付
