@@ -105,7 +105,7 @@ export interface WechatAppPayOrderRes extends WechatBaseResponse {
 }
 
 /** 微信H5支付下单接口返回结果 */
-export interface WechatH5PayOrderRes extends WechatAppPayOrderRes {
+export interface WechatWapPayOrderRes extends WechatAppPayOrderRes {
     /** 支付跳转链接，有效期为5分钟 */
     mweb_url: string;
 }
