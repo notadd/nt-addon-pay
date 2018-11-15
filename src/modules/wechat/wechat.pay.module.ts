@@ -6,7 +6,7 @@ import { PayAddonConfig, PayAddonConfigProvider } from '../../common';
 import { WechatSandboxResponse } from './interfaces/sandbox.interface';
 import { WechatAppPayService } from './services/app.pay.service';
 import { WechatPayBaseService } from './services/base.service';
-import { WechatSwipePayService } from './services/swipe.pay.service';
+import { WechatMicroPayService } from './services/micro.pay.service';
 import { WechatRequestUtil } from './utils/request.util';
 import { WechatSignUtil } from './utils/sign.util';
 
@@ -15,7 +15,7 @@ import { WechatSignUtil } from './utils/sign.util';
     providers: [
         WechatPayBaseService,
         WechatAppPayService,
-        WechatSwipePayService,
+        WechatMicroPayService,
         WechatSignUtil,
         WechatRequestUtil
     ],

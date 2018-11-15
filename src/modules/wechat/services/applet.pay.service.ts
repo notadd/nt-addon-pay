@@ -4,14 +4,14 @@ import { WechatOtherPayOrderReqParam, WechatOtherPayOrderRes } from '../interfac
 import { WechatPayBaseService } from './base.service';
 
 /**
- * 微信支付-Native支付类
+ * 微信支付-小程序支付类
  */
 @Injectable()
-export class WechatNativePayService extends WechatPayBaseService {
+export class WechatAppletPayService extends WechatPayBaseService {
     /**
-     * 扫码支付
+     * 小程序支付
      *
-     * @param params 扫码支付接口请求参数
+     * @param params 小程序支付接口请求参数
      */
     async pay(params: WechatOtherPayOrderReqParam): Promise<WechatOtherPayOrderRes> {
         return await this.requestUtil.post<WechatOtherPayOrderRes>(this.unifiedOrderUrl, params);

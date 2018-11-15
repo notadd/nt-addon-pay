@@ -3,12 +3,15 @@ import { Injectable } from '@nestjs/common';
 import { WechatSwipePayOrderReqParam, WechatSwipePayOrderRes } from '../interfaces/order.interface';
 import { WechatPayBaseService } from './base.service';
 
+/**
+ * 微信支付-付款码支付类
+ */
 @Injectable()
-export class WechatSwipePayService extends WechatPayBaseService {
+export class WechatMicroPayService extends WechatPayBaseService {
     /**
-     * 刷卡支付
+     * 付款码支付
      */
-    async swipePay(params: WechatSwipePayOrderReqParam) {
+    async pay(params: WechatSwipePayOrderReqParam) {
         const url = 'https://api.mch.weixin.qq.com/pay/micropay';
         return await this.requestUtil.post<WechatSwipePayOrderRes>(url, params);
     }

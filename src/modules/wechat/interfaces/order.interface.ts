@@ -30,7 +30,7 @@ interface WechatBaseOrderRequestParam {
 
 /** 微信支付交易类型 */
 export enum WechatTradeType {
-    /** 公众号、小程序支付 */
+    /** JSAPI、小程序支付 */
     JSAPI = 'JSAPI',
     /** 扫码支付 */
     NATIVE = 'NATIVE',
@@ -54,7 +54,7 @@ export interface WechatAppPayOrderReqParam extends WechatBaseOrderRequestParam {
     notify_url: string;
 }
 
-/** 微信扫码支付、公众号支付、H5支付、小程序支付下单接口请求参数 */
+/** 微信扫码支付、JSAPI支付、H5支付、小程序支付下单接口请求参数 */
 export interface WechatOtherPayOrderReqParam extends WechatAppPayOrderReqParam {
     /** 商品ID，交易类型为NATIVE(扫码支付)时必传 */
     product_id?: string;
@@ -110,7 +110,7 @@ export interface WechatWapPayOrderRes extends WechatAppPayOrderRes {
     mweb_url: string;
 }
 
-/** 微信扫码支付、公众号支付、小程序支付下单接口返回结果 */
+/** 微信扫码支付、JSAPI支付、小程序支付下单接口返回结果 */
 export interface WechatOtherPayOrderRes extends WechatAppPayOrderRes {
     /** 二维码连接 */
     code_url?: string;
