@@ -92,7 +92,7 @@ export class WechatPayBaseService {
     /**
      * 检查是否覆盖默认的签名类型
      */
-    private checkOverrideDefaultSignType(params: any) {
+    protected checkOverrideDefaultSignType(params: any) {
         const signType = this.payAddonConfig.wechatConfig.sign_type;
         if (signType) {
             (params as any).sign_type = signType;

@@ -40,8 +40,8 @@ export enum WechatTradeType {
     MWEB = 'MWEB',
 }
 
-/** 微信刷卡支付下单接口请求参数 */
-export interface WechatSwipePayOrderReqParam extends WechatBaseOrderRequestParam {
+/** 微信付款码支付下单接口请求参数 */
+export interface WechatMicroPayOrderReqParam extends WechatBaseOrderRequestParam {
     /** 授权码 */
     auth_code: string;
 }
@@ -62,8 +62,8 @@ export interface WechatOtherPayOrderReqParam extends WechatAppPayOrderReqParam {
     openid?: string;
 }
 
-/** 微信刷卡支付下单接口返回结果 */
-export interface WechatSwipePayOrderRes extends WechatBaseResponse {
+/** 微信付款码支付下单接口返回结果 */
+export interface WechatMicroPayOrderRes extends WechatBaseResponse {
     /** 用户标识 */
     openid: string;
     /** 是否关注公众账号，Y-关注，N-未关注 */
@@ -172,3 +172,17 @@ export interface WechatBaseCloseOrderReqParam {
 
 /** 微信支付关闭订单接口基础返回结果 */
 export interface WechatBaseCloseOrderRes extends WechatBaseResponse { }
+
+/** 微信支付撤销订单接口基础请求参数 */
+export interface WechatMicroPayReverseOrderReqParam {
+    /** 商户订单号 */
+    out_trade_no: string;
+    /** 微信订单号，优先使用 */
+    transaction_id?: string;
+}
+
+/** 微信支付撤销订单接口基础返回结果 */
+export interface WechatMicroPayReverseOrderRes extends WechatBaseResponse {
+    /** 是否重调，是否需要继续调用撤销，Y-需要，N-不需要 */
+    recall: string;
+}
