@@ -44,7 +44,7 @@ export class WechatPayModule implements OnModuleInit {
         } else {
             const data = await this.getSandboxSignKey();
             if (data.return_code === 'FAIL') {
-                throw new Error('微信支付获取沙箱环境秘钥时出现异常：' + data.retmsg);
+                throw new Error('微信支付获取沙箱环境秘钥时出现异常：' + data.return_msg);
             }
             fs.writeFileSync(path.join(__dirname, '.sandbox_signkey.txt'), data.sandbox_signkey);
             this.payAddonConfig.wechatConfig.secretKey = data.sandbox_signkey;
