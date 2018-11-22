@@ -27,7 +27,7 @@ import { WechatSignUtil } from './utils/sign.util';
         WechatSignUtil,
         WechatRequestUtil
     ],
-    exports: []
+    exports: [WechatAppPayService, WechatAppletPayService, WechatJSAPIPayService, WechatMicroPayService, WechatNativePayService, WechatWapPayService]
 })
 export class WechatPayModule implements OnModuleInit {
     /** 沙箱环境获取验签秘钥接口地址 */
