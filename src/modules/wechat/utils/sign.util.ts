@@ -11,16 +11,16 @@ export class WechatSignUtil {
      *
      * @param params 参数
      * @param secretKey 秘钥
-     * @param hashType 签名方式(选填)，默认MD5
+     * @param signType 签名方式(选填)，默认MD5
      */
-    sign(params: {}, secretKey: string, hashType?: 'MD5' | 'HMAC-SHA256') {
+    sign(params: {}, secretKey: string, signType?: 'MD5' | 'HMAC-SHA256') {
         const paramArr: string[] = [];
         const sortedKeys = Object.keys(params).sort();
         for (const key of sortedKeys) {
             params[key] && paramArr.push(`${key}=${params[key]}`);
         }
         let signStr = paramArr.join('&');
-        if (hashType && hashType === 'HMAC-SHA256') {
+        if (signType && signType === 'HMAC-SHA256') {
             return crypto.createHmac('sha256', secretKey).update(signStr).digest('hex').toUpperCase();
         }
         return crypto.createHash('md5').update(signStr += `&key=${secretKey}`).digest('hex').toUpperCase();
