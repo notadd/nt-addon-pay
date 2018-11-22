@@ -39,15 +39,18 @@
     "jest": {
         "moduleFileExtensions": [
             "js",
-            "json",
             "ts"
         ],
-        "rootDir": "test",
         "testRegex": ".spec.ts$",
         "transform": {
             "^.+\\.(t|j)s$": "ts-jest"
         },
-        "coverageDirectory": "../coverage",
+        "collectCoverage": true,
+        "collectCoverageFrom": [
+            "src/**/*.service.ts",
+            "!src/modules/wechat/services/base.service.ts"
+        ],
+        "coverageDirectory": "coverage",
         "testEnvironment": "node"
     }
 }
