@@ -101,11 +101,11 @@ export class WechatPayBaseService {
      *
      * @param body 请求体
      */
-    public async parsePayNotify(body: any): Promise<WechatPayBaseNotifyRes> {
+    public async parseWechatPayNotify(body: any): Promise<WechatPayBaseNotifyRes> {
         const secretKey = this.payAddonConfig.wechatConfig.secretKey;
         const signType = this.payAddonConfig.wechatConfig.sign_type;
         const result = await this.xmlUtil.parseObjFromXml<WechatPayBaseNotifyRes>(body);
-        if (result.sign !== this.signUtil.sign(result, secretKey, signType)) {
+        if (result.sign && result.sign !== this.signUtil.sign(result, secretKey, signType)) {
             // 支付结果通知验签失败时，返回 undefined
             return undefined;
         }
