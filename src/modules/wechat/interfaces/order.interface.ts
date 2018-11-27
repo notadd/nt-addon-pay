@@ -1,3 +1,4 @@
+import { WechatTradeType } from '../enums/trade-type.enum';
 import { WechatBaseResponse } from './base.interface';
 
 /** 微信支付下单接口基础请求参数 */
@@ -26,18 +27,6 @@ interface WechatBaseOrderRequestParam {
     time_expire?: string;
     /** 场景信息 */
     scene_info?: string;
-}
-
-/** 微信支付交易类型 */
-export enum WechatTradeType {
-    /** JSAPI、小程序支付 */
-    JSAPI = 'JSAPI',
-    /** 扫码支付 */
-    NATIVE = 'NATIVE',
-    /** APP支付 */
-    APP = 'APP',
-    /** H5支付 */
-    MWEB = 'MWEB',
 }
 
 /** 微信付款码支付下单接口请求参数 */
