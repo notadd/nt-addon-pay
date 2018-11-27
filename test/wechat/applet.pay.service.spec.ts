@@ -1,9 +1,7 @@
 import { Test } from '@nestjs/testing';
 import * as fs from 'fs';
 
-import { WechatTradeType } from '../../src/modules/wechat/interfaces/order.interface';
-import { WechatAppletPayService } from '../../src/modules/wechat/services/applet.pay.service';
-import { PayAddon } from '../../src/pay.addon';
+import { PayAddon, WechatAppletPayService, WechatTradeType } from '../../src';
 
 describe('WechatPayAppletService', () => {
     let wechatAppletPayService: WechatAppletPayService;

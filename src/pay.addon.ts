@@ -14,7 +14,8 @@ export class PayAddon implements OnModuleInit {
     static forRoot(config: PayAddonConfig): DynamicModule {
         return {
             module: PayAddon,
-            imports: [SharedModule.forFeature(config), WechatPayModule, AliPayModule]
+            imports: [SharedModule.forFeature(config), WechatPayModule, AliPayModule],
+            exports: [WechatPayModule, AliPayModule]
         };
     }
 

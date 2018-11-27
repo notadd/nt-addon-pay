@@ -12,7 +12,7 @@ export class XmlUtil {
      * @param obj 对象
      */
     convertObjToXml(obj: {}) {
-        return new xml2js.Builder({ rootName: 'xml' }).buildObject(obj);
+        return new xml2js.Builder({ rootName: 'xml', cdata: true }).buildObject(obj);
     }
 
     /**

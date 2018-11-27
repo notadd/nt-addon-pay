@@ -27,7 +27,7 @@ import { WechatSignUtil } from './utils/sign.util';
         WechatSignUtil,
         WechatRequestUtil
     ],
-    exports: []
+    exports: [WechatAppPayService, WechatAppletPayService, WechatJSAPIPayService, WechatMicroPayService, WechatNativePayService, WechatWapPayService]
 })
 export class WechatPayModule implements OnModuleInit {
     /** 沙箱环境获取验签秘钥接口地址 */
@@ -39,12 +39,14 @@ export class WechatPayModule implements OnModuleInit {
     ) { }
 
     async onModuleInit() {
+        if (!this.payAddonConfig.wechatConfig.sandbox) return;
         if (fs.existsSync(path.join(__dirname, '.sandbox_signkey.txt'))) {
             this.payAddonConfig.wechatConfig.secretKey = fs.readFileSync(path.join(__dirname, '.sandbox_signkey.txt')).toString();
         } else {
             const data = await this.getSandboxSignKey();
             if (data.return_code === 'FAIL') {
-                throw new Error('微信支付获取沙箱环境秘钥时出现异常：' + data.retmsg);
+                const errmsg = data.retmsg ? data.retmsg : data.return_msg;
+                throw new Error('微信支付获取沙箱环境秘钥时出现异常：' + errmsg);
             }
             fs.writeFileSync(path.join(__dirname, '.sandbox_signkey.txt'), data.sandbox_signkey);
             this.payAddonConfig.wechatConfig.secretKey = data.sandbox_signkey;

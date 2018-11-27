@@ -4,7 +4,54 @@
 
 ## 使用说明
 
-TODO
+### 安装
+
+`npm install @notadd/addon-pay`
+
+### 配置 PayAddon
+
+```typescript
+import { Module } from '@nestjs/common';
+import { PayAddon } from '@notadd/addon-pay';
+
+@Module({
+  imports: [
+    PayAddon.forRoot({
+        wechatConfig: {
+            appid: 'appid',     // 公众号appi/应用appid/小程序appid
+            mch_id: 'mch_id',   // 商户号
+            secretKey: 'secretKey', // 商户交易秘钥
+            pfx: fs.readFileSync('path_to_p12_file'),   // p12文件
+            sandbox: true   // 是否启用沙箱环境，默认不启用
+        }
+    })
+  ]
+})
+export class ApplicationModule {}
+```
+
+### 使用 Wechat`XXX`PayService
+
+```typescript
+import { Injectable, Inject } from '@nestjs/common';
+import { WechatNativePayService, WechatTradeType } from '@notadd/addon-pay';
+
+@Injectable()
+export class TestPay {
+    constructor(@Inject(WechatNativePayService) private readonly wechatNativePayService: WechatNativePayService) { }
+
+    async nativePay() {
+        const ressult = await this.wechatNativePayService.pay({
+            body: '支付一下',
+            out_trade_no: '201811271512000001',
+            total_fee: 301,
+            spbill_create_ip: '127.0.0.1',
+            notify_url: 'your.domain.com/wechat-pay/notify',
+            trade_type: WechatTradeType.JSAPI
+        });
+    }
+}
+```
 
 ## 贡献说明
 
