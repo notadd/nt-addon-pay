@@ -4,7 +4,7 @@
         "declaration": true,
         "noImplicitAny": false,
         "removeComments": false,
-        "sourceMap": true,
+        "sourceMap": false,
         "allowSyntheticDefaultImports": true,
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
