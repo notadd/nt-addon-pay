@@ -39,6 +39,7 @@ export class WechatPayModule implements OnModuleInit {
     ) { }
 
     async onModuleInit() {
+        if (!this.payAddonConfig.wechatConfig.sandbox) return;
         if (fs.existsSync(path.join(__dirname, '.sandbox_signkey.txt'))) {
             this.payAddonConfig.wechatConfig.secretKey = fs.readFileSync(path.join(__dirname, '.sandbox_signkey.txt')).toString();
         } else {
