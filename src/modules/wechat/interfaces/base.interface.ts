@@ -1,5 +1,5 @@
 /** 微信支付接口基础返回结果 */
-export interface WechatBaseResponse {
+export interface WeChatBaseResponse {
     /** 返回状态码 */
     return_code: string;
     /** 返回信息 */

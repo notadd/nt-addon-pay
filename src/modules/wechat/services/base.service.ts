@@ -3,28 +3,28 @@ import * as https from 'https';
 
 import { PayAddonConfig, PayAddonConfigProvider } from '../../../common';
 import { XmlUtil } from '../../../shared/utils/xml.util';
-import { WechatCertificateAgentProvider } from '../constants/wechat.constant';
+import { WeChatCertificateAgentProvider } from '../constants/wechat.constant';
 import {
-    WechatBaseCloseOrderReqParam,
-    WechatBaseCloseOrderRes,
-    WechatBaseQueryOrderReqParam,
-    WechatBaseQueryOrderRes,
+    WeChatBaseCloseOrderReqParam,
+    WeChatBaseCloseOrderRes,
+    WeChatBaseQueryOrderReqParam,
+    WeChatBaseQueryOrderRes
 } from '../interfaces/order.interface';
-import { WechatPayBaseNotifyRes } from '../interfaces/pay-notify.interface';
+import { WeChatPayBaseNotifyRes } from '../interfaces/pay-notify.interface';
 import {
-    WechatBaseQueryRefundReqParam,
-    WechatBaseQueryRefundRes,
-    WechatBaseRefundReqParam,
-    WechatBaseRefundRes,
+    WeChatBaseQueryRefundReqParam,
+    WeChatBaseQueryRefundRes,
+    WeChatBaseRefundReqParam,
+    WeChatBaseRefundRes
 } from '../interfaces/refund.interface';
-import { WechatRequestUtil } from '../utils/request.util';
-import { WechatSignUtil } from '../utils/sign.util';
+import { WeChatRequestUtil } from '../utils/request.util';
+import { WeChatSignUtil } from '../utils/sign.util';
 
 /**
  * 微信支付
  */
 @Injectable()
-export class WechatPayBaseService {
+export class WeChatPayBaseService {
     /** API 接口域名 */
     protected apiBase = 'https://api.mch.weixin.qq.com' + (this.payAddonConfig.wechatConfig.sandbox ? '/sandboxnew' : '');
     /** 统一下单接口地址 */
@@ -44,10 +44,10 @@ export class WechatPayBaseService {
 
     constructor(
         @Inject(PayAddonConfigProvider) protected readonly payAddonConfig: PayAddonConfig,
-        @Inject(WechatCertificateAgentProvider) protected readonly certificateAgent: https.Agent,
-        @Inject(WechatRequestUtil) protected readonly requestUtil: WechatRequestUtil,
+        @Inject(WeChatCertificateAgentProvider) protected readonly certificateAgent: https.Agent,
+        @Inject(WeChatRequestUtil) protected readonly requestUtil: WeChatRequestUtil,
         @Inject(XmlUtil) private readonly xmlUtil: XmlUtil,
-        @Inject(WechatSignUtil) private readonly signUtil: WechatSignUtil
+        @Inject(WeChatSignUtil) private readonly signUtil: WeChatSignUtil
     ) { }
 
     /**
@@ -55,10 +55,10 @@ export class WechatPayBaseService {
      *
      * @param params 查询订单请求参数
      */
-    public async queryOrder(params: WechatBaseQueryOrderReqParam): Promise<WechatBaseQueryOrderRes> {
+    public async queryOrder(params: WeChatBaseQueryOrderReqParam): Promise<WeChatBaseQueryOrderRes> {
         if (!params.out_trade_no && !params.transaction_id) throw new Error('参数有误，out_trade_no 和 transaction_id 二选一');
         this.checkOverrideDefaultSignType(params);
-        return await this.requestUtil.post<WechatBaseQueryOrderRes>(this.queryOrderUrl, params);
+        return await this.requestUtil.post<WeChatBaseQueryOrderRes>(this.queryOrderUrl, params);
     }
 
     /**
@@ -66,9 +66,9 @@ export class WechatPayBaseService {
      *
      * @param params 关闭订单请求参数
      */
-    public async closeOrder(params: WechatBaseCloseOrderReqParam): Promise<WechatBaseCloseOrderRes> {
+    public async closeOrder(params: WeChatBaseCloseOrderReqParam): Promise<WeChatBaseCloseOrderRes> {
         this.checkOverrideDefaultSignType(params);
-        return await this.requestUtil.post<WechatBaseCloseOrderRes>(this.closeOrderUrl, params);
+        return await this.requestUtil.post<WeChatBaseCloseOrderRes>(this.closeOrderUrl, params);
     }
 
     /**
@@ -76,10 +76,10 @@ export class WechatPayBaseService {
      *
      * @param params 申请退款请求参数
      */
-    public async refund(params: WechatBaseRefundReqParam): Promise<WechatBaseRefundRes> {
+    public async refund(params: WeChatBaseRefundReqParam): Promise<WeChatBaseRefundRes> {
         if (!params.out_trade_no && !params.transaction_id) throw new Error('参数有误，out_trade_no 和 transaction_id 二选一');
         this.checkOverrideDefaultSignType(params);
-        return await this.requestUtil.post<WechatBaseRefundRes>(this.refundUrl, params, { httpsAgent: this.certificateAgent });
+        return await this.requestUtil.post<WeChatBaseRefundRes>(this.refundUrl, params, { httpsAgent: this.certificateAgent });
     }
 
     /**
@@ -87,11 +87,11 @@ export class WechatPayBaseService {
      *
      * @param params 查询退款请求参数
      */
-    public async queryRefund(params: WechatBaseQueryRefundReqParam): Promise<WechatBaseQueryRefundRes> {
+    public async queryRefund(params: WeChatBaseQueryRefundReqParam): Promise<WeChatBaseQueryRefundRes> {
         if (!params.out_trade_no && !params.transaction_id && !params.out_refund_no && !params.refund_id) {
             throw new Error('参数有误，out_trade_no、transaction_id、out_refund_no 和 refund_id 四选一');
         }
-        return await this.requestUtil.post<WechatBaseQueryRefundRes>(this.queryOrderUrl, params);
+        return await this.requestUtil.post<WeChatBaseQueryRefundRes>(this.queryOrderUrl, params);
     }
 
     /**
@@ -101,10 +101,10 @@ export class WechatPayBaseService {
      *
      * @param body 请求体
      */
-    public async parseWechatPayNotify(body: any): Promise<WechatPayBaseNotifyRes> {
+    public async parseWeChatPayNotify(body: any): Promise<WeChatPayBaseNotifyRes> {
         const secretKey = this.payAddonConfig.wechatConfig.secretKey;
         const signType = this.payAddonConfig.wechatConfig.sign_type;
-        const result = await this.xmlUtil.parseObjFromXml<WechatPayBaseNotifyRes>(body);
+        const result = await this.xmlUtil.parseObjFromXml<WeChatPayBaseNotifyRes>(body);
         if (result.sign && result.sign !== this.signUtil.sign(result, secretKey, signType)) {
             // 支付结果通知验签失败时，返回 undefined
             return undefined;

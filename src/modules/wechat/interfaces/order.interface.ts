@@ -1,8 +1,8 @@
-import { WechatTradeType } from '../enums/trade-type.enum';
-import { WechatBaseResponse } from './base.interface';
+import { WeChatTradeType } from '../enums/trade-type.enum';
+import { WeChatBaseResponse } from './base.interface';
 
 /** 微信支付下单接口基础请求参数 */
-interface WechatBaseOrderRequestParam {
+interface WeChatBaseOrderRequestParam {
     /** 设备号 */
     device_info?: string;
     /** 商户订单号 */
@@ -30,21 +30,21 @@ interface WechatBaseOrderRequestParam {
 }
 
 /** 微信付款码支付下单接口请求参数 */
-export interface WechatMicroPayOrderReqParam extends WechatBaseOrderRequestParam {
+export interface WeChatMicroPayOrderReqParam extends WeChatBaseOrderRequestParam {
     /** 授权码 */
     auth_code: string;
 }
 
 /** 微信APP支付下单接口请求参数 */
-export interface WechatAppPayOrderReqParam extends WechatBaseOrderRequestParam {
+export interface WeChatAppPayOrderReqParam extends WeChatBaseOrderRequestParam {
     /** 交易类型 */
-    trade_type: WechatTradeType;
+    trade_type: WeChatTradeType;
     /** 通知地址 */
     notify_url: string;
 }
 
 /** 微信扫码支付、JSAPI支付、H5支付、小程序支付下单接口请求参数 */
-export interface WechatOtherPayOrderReqParam extends WechatAppPayOrderReqParam {
+export interface WeChatOtherPayOrderReqParam extends WeChatAppPayOrderReqParam {
     /** 商品ID，交易类型为NATIVE(扫码支付)时必传 */
     product_id?: string;
     /** 用户标识 */
@@ -52,7 +52,7 @@ export interface WechatOtherPayOrderReqParam extends WechatAppPayOrderReqParam {
 }
 
 /** 微信付款码支付下单接口返回结果 */
-export interface WechatMicroPayOrderRes extends WechatBaseResponse {
+export interface WeChatMicroPayOrderRes extends WeChatBaseResponse {
     /** 用户标识 */
     openid: string;
     /** 是否关注公众账号，Y-关注，N-未关注 */
@@ -86,7 +86,7 @@ export interface WechatMicroPayOrderRes extends WechatBaseResponse {
 }
 
 /** 微信APP支付下单接口返回结果 */
-export interface WechatAppPayOrderRes extends WechatBaseResponse {
+export interface WeChatAppPayOrderRes extends WeChatBaseResponse {
     /** 交易类型 */
     trade_type: string;
     /** 预支付交易会话标识 */
@@ -94,19 +94,19 @@ export interface WechatAppPayOrderRes extends WechatBaseResponse {
 }
 
 /** 微信H5支付下单接口返回结果 */
-export interface WechatWapPayOrderRes extends WechatAppPayOrderRes {
+export interface WeChatWapPayOrderRes extends WeChatAppPayOrderRes {
     /** 支付跳转链接，有效期为5分钟 */
     mweb_url: string;
 }
 
 /** 微信扫码支付、JSAPI支付、小程序支付下单接口返回结果 */
-export interface WechatOtherPayOrderRes extends WechatAppPayOrderRes {
+export interface WeChatOtherPayOrderRes extends WeChatAppPayOrderRes {
     /** 二维码连接 */
     code_url?: string;
 }
 
 /** 微信支付查询订单接口基础请求参数 */
-export interface WechatBaseQueryOrderReqParam {
+export interface WeChatBaseQueryOrderReqParam {
     /** 微信订单号，优先使用 */
     transaction_id?: string;
     /** 商户订单号 */
@@ -114,7 +114,7 @@ export interface WechatBaseQueryOrderReqParam {
 }
 
 /** 微信支付查询订单接口基础返回结果 */
-export interface WechatBaseQueryOrderRes extends WechatBaseResponse {
+export interface WeChatBaseQueryOrderRes extends WeChatBaseResponse {
     /** 设备号 */
     device_info?: string;
     /** 用户标识 */
@@ -154,16 +154,16 @@ export interface WechatBaseQueryOrderRes extends WechatBaseResponse {
 }
 
 /** 微信支付关闭订单接口基础请求参数 */
-export interface WechatBaseCloseOrderReqParam {
+export interface WeChatBaseCloseOrderReqParam {
     /** 商户订单号 */
     out_trade_no: string;
 }
 
 /** 微信支付关闭订单接口基础返回结果 */
-export interface WechatBaseCloseOrderRes extends WechatBaseResponse { }
+export interface WeChatBaseCloseOrderRes extends WeChatBaseResponse { }
 
 /** 微信支付撤销订单接口基础请求参数 */
-export interface WechatMicroPayReverseOrderReqParam {
+export interface WeChatMicroPayReverseOrderReqParam {
     /** 商户订单号 */
     out_trade_no: string;
     /** 微信订单号，优先使用 */
@@ -171,7 +171,7 @@ export interface WechatMicroPayReverseOrderReqParam {
 }
 
 /** 微信支付撤销订单接口基础返回结果 */
-export interface WechatMicroPayReverseOrderRes extends WechatBaseResponse {
+export interface WeChatMicroPayReverseOrderRes extends WeChatBaseResponse {
     /** 是否重调，是否需要继续调用撤销，Y-需要，N-不需要 */
     recall: string;
 }

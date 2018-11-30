@@ -4,18 +4,18 @@ import * as axios from 'axios';
 import { PayAddonConfig, PayAddonConfigProvider } from '../../../common';
 import { RandomUtil } from '../../../shared/utils/random.util';
 import { XmlUtil } from '../../../shared/utils/xml.util';
-import { WechatSignUtil } from './sign.util';
+import { WeChatSignUtil } from './sign.util';
 
 /**
  * 微信支付接口请求工具
  */
 @Injectable()
-export class WechatRequestUtil {
+export class WeChatRequestUtil {
     constructor(
         @Inject(HttpService) private readonly httpService: HttpService,
         @Inject(PayAddonConfigProvider) private readonly payAddonConfig: PayAddonConfig,
         @Inject(XmlUtil) private readonly xmlUtil: XmlUtil,
-        @Inject(WechatSignUtil) private readonly signUtil: WechatSignUtil,
+        @Inject(WeChatSignUtil) private readonly signUtil: WeChatSignUtil,
         @Inject(RandomUtil) private readonly randomUtil: RandomUtil
     ) { }
 

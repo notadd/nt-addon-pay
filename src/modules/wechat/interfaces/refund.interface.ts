@@ -1,7 +1,7 @@
-import { WechatBaseResponse } from './base.interface';
+import { WeChatBaseResponse } from './base.interface';
 
 /** 微信支付申请退款接口基础请求参数 */
-export interface WechatBaseRefundReqParam {
+export interface WeChatBaseRefundReqParam {
     /** 微信订单号，优先使用 */
     transaction_id?: string;
     /** 商户订单号 */
@@ -29,7 +29,7 @@ export interface WechatBaseRefundReqParam {
 }
 
 /** 微信支付申请退款接口基础返回结果 */
-export interface WechatBaseRefundRes extends WechatBaseResponse {
+export interface WeChatBaseRefundRes extends WeChatBaseResponse {
     /** 微信订单号 */
     transaction_id: string;
     /** 商户订单号 */
@@ -61,7 +61,7 @@ export interface WechatBaseRefundRes extends WechatBaseResponse {
 }
 
 /** 微信支付查询退款接口基础请求参数 */
-export interface WechatBaseQueryRefundReqParam {
+export interface WeChatBaseQueryRefundReqParam {
     /** 微信退款单号，优先级1 */
     refund_id?: string;
     /** 商户退款单号，优先级2 */
@@ -79,7 +79,7 @@ export interface WechatBaseQueryRefundReqParam {
 }
 
 /** 微信支付查询退款接口基础返回结果 */
-export interface WechatBaseQueryRefundRes extends WechatBaseResponse {
+export interface WeChatBaseQueryRefundRes extends WeChatBaseResponse {
     /** 微信订单号 */
     transaction_id: string;
     /** 商户订单号 */

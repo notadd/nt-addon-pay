@@ -5,7 +5,7 @@ import * as crypto from 'crypto';
  * 微信签名工具
  */
 @Injectable()
-export class WechatSignUtil {
+export class WeChatSignUtil {
     /**
      * 计算微信支付签名
      *

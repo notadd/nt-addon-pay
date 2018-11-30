@@ -2,7 +2,7 @@ import { DynamicModule, Global, HttpModule, Module } from '@nestjs/common';
 import * as https from 'https';
 
 import { PayAddonConfig, PayAddonConfigProvider } from '../common';
-import { WechatCertificateAgentProvider } from '../modules/wechat/constants/wechat.constant';
+import { WeChatCertificateAgentProvider } from '../modules/wechat/constants/wechat.constant';
 import { RandomUtil } from './utils/random.util';
 import { XmlUtil } from './utils/xml.util';
 
@@ -18,9 +18,9 @@ export class SharedModule {
                 XmlUtil,
                 RandomUtil,
                 { provide: PayAddonConfigProvider, useValue: config },
-                { provide: WechatCertificateAgentProvider, useValue: pfx }
+                { provide: WeChatCertificateAgentProvider, useValue: pfx }
             ],
-            exports: [HttpModule, RandomUtil, XmlUtil, PayAddonConfigProvider, WechatCertificateAgentProvider]
+            exports: [HttpModule, RandomUtil, XmlUtil, PayAddonConfigProvider, WeChatCertificateAgentProvider]
         };
     }
 

@@ -1,5 +1,5 @@
 /** 微信支付结果通知返回值 */
-export interface WechatPayBaseNotifyRes {
+export interface WeChatPayBaseNotifyRes {
     /** 返回状态码 */
     return_code: string;
     /** 返回信息 */
