@@ -45,7 +45,7 @@
         "transform": {
             "^.+\\.(t|j)s$": "ts-jest"
         },
-        "collectCoverage": true,
+        "collectCoverage": false,
         "collectCoverageFrom": [
             "src/**/*.service.ts",
             "!src/modules/wechat/services/base.service.ts"
