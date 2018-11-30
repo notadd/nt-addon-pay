@@ -1,12 +1,12 @@
 import { Test } from '@nestjs/testing';
 import * as fs from 'fs';
 
-import { PayAddon, WechatAppPayService, WechatTradeType } from '../../src';
+import { PayAddon, WeChatAppPayService, WeChatTradeType } from '../../src';
 
-describe('WechatPayAppService', () => {
-    let wechatAppPayService: WechatAppPayService;
+describe('WeChatPayAppService', () => {
+    let wechatAppPayService: WeChatAppPayService;
 
-    beforeEach(async () => {
+    beforeAll(async () => {
         const testModule = await Test.createTestingModule({
             imports: [PayAddon.forRoot({
                 wechatConfig: {
@@ -19,7 +19,7 @@ describe('WechatPayAppService', () => {
             })]
         }).compile();
         await testModule.init();
-        wechatAppPayService = testModule.get<WechatAppPayService>(WechatAppPayService);
+        wechatAppPayService = testModule.get<WeChatAppPayService>(WeChatAppPayService);
     });
 
     describe('pay', () => {
@@ -30,7 +30,7 @@ describe('WechatPayAppService', () => {
                 total_fee: 301,
                 spbill_create_ip: '127.0.0.1',
                 notify_url: '127.0.0.1',
-                trade_type: WechatTradeType.APP
+                trade_type: WeChatTradeType.APP
             });
             expect(res.result_code).toBe('SUCCESS');
         });
@@ -42,7 +42,7 @@ describe('WechatPayAppService', () => {
                 total_fee: 0.1,
                 spbill_create_ip: '127.0.0.1',
                 notify_url: '127.0.0.1',
-                trade_type: WechatTradeType.APP
+                trade_type: WeChatTradeType.APP
             });
             expect(res.return_code).toBe('FAIL');
         });
@@ -80,16 +80,6 @@ describe('WechatPayAppService', () => {
                 out_refund_no: '201811011926123refund',
                 total_fee: 301,
                 refund_fee: 1
-            });
-            expect(res.result_code).toBe('SUCCESS');
-        });
-    });
-
-    describe('queryRefund', () => {
-        it('should return success', async () => {
-            const res = await wechatAppPayService.queryRefund({
-                out_trade_no: '201811011926123',
-                out_refund_no: '201811011926123refund'
             });
             expect(res.result_code).toBe('SUCCESS');
         });
