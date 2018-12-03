@@ -17,6 +17,7 @@ export class WeChatSignUtil {
         const paramArr: string[] = [];
         const sortedKeys = Object.keys(params).sort();
         for (const key of sortedKeys) {
+            if (key === 'sign') continue;
             params[key] && paramArr.push(`${key}=${params[key]}`);
         }
         let signStr = paramArr.join('&');
