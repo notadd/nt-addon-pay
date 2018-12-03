@@ -82,6 +82,6 @@ export class WeChatPayModule implements OnModuleInit {
         const exist = fs.existsSync(path.join(__dirname, this.sandboxSignKeyFileName));
         if (!exist) return true;
         const fileContent = fs.readFileSync(path.join(__dirname, this.sandboxSignKeyFileName)).toString();
-        return (+new Date()) - JSON.parse(fileContent).createdAt > (3600 * 48 * 1000);
+        return (+new Date()) - JSON.parse(fileContent).createdAt > (3600 * 24 * 1000);
     }
 }
