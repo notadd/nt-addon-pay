@@ -2,7 +2,6 @@ import { Inject, Injectable } from '@nestjs/common';
 import * as https from 'https';
 
 import { PayAddonConfig, PayAddonConfigProvider } from '../../../common';
-import { XmlUtil } from '../../../shared/utils/xml.util';
 import { WeChatCertificateAgentProvider } from '../constants/wechat.constant';
 import {
     WeChatBaseCloseOrderReqParam,
@@ -10,7 +9,6 @@ import {
     WeChatBaseQueryOrderReqParam,
     WeChatBaseQueryOrderRes
 } from '../interfaces/order.interface';
-import { WeChatPayBaseNotifyRes } from '../interfaces/pay-notify.interface';
 import {
     WeChatBaseQueryRefundReqParam,
     WeChatBaseQueryRefundRes,
@@ -18,7 +16,6 @@ import {
     WeChatBaseRefundRes
 } from '../interfaces/refund.interface';
 import { WeChatRequestUtil } from '../utils/request.util';
-import { WeChatSignUtil } from '../utils/sign.util';
 
 /**
  * 微信支付
@@ -45,9 +42,7 @@ export class WeChatPayBaseService {
     constructor(
         @Inject(PayAddonConfigProvider) protected readonly payAddonConfig: PayAddonConfig,
         @Inject(WeChatCertificateAgentProvider) protected readonly certificateAgent: https.Agent,
-        @Inject(WeChatRequestUtil) protected readonly requestUtil: WeChatRequestUtil,
-        @Inject(XmlUtil) private readonly xmlUtil: XmlUtil,
-        @Inject(WeChatSignUtil) private readonly signUtil: WeChatSignUtil
+        @Inject(WeChatRequestUtil) protected readonly requestUtil: WeChatRequestUtil
     ) { }
 
     /**
@@ -92,24 +87,6 @@ export class WeChatPayBaseService {
             throw new Error('参数有误，out_trade_no、transaction_id、out_refund_no 和 refund_id 四选一');
         }
         return await this.requestUtil.post<WeChatBaseQueryRefundRes>(this.queryOrderUrl, params);
-    }
-
-    /**
-     * 解析支付结果通知的请求体
-     *
-     * 支付结果通知验签失败时，返回 undefined
-     *
-     * @param body 请求体
-     */
-    public async parseWeChatPayNotify(body: any): Promise<WeChatPayBaseNotifyRes> {
-        const secretKey = this.payAddonConfig.wechatConfig.secretKey;
-        const signType = this.payAddonConfig.wechatConfig.sign_type;
-        const result = await this.xmlUtil.parseObjFromXml<WeChatPayBaseNotifyRes>(body);
-        if (result.sign && result.sign !== this.signUtil.sign(result, secretKey, signType)) {
-            // 支付结果通知验签失败时，返回 undefined
-            return undefined;
-        }
-        return result;
     }
 
     /**

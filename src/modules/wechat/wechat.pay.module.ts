@@ -11,6 +11,7 @@ import { WeChatJSAPIPayService } from './services/jsapi.pay.service';
 import { WeChatMicroPayService } from './services/micro.pay.service';
 import { WeChatNativePayService } from './services/native.pay.service';
 import { WeChatWapPayService } from './services/wap.pay.service';
+import { WeChatNotifyParserUtil } from './utils/notify-parser.util';
 import { WeChatRequestUtil } from './utils/request.util';
 import { WeChatSignUtil } from './utils/sign.util';
 
@@ -25,9 +26,18 @@ import { WeChatSignUtil } from './utils/sign.util';
         WeChatNativePayService,
         WeChatWapPayService,
         WeChatSignUtil,
-        WeChatRequestUtil
+        WeChatRequestUtil,
+        WeChatNotifyParserUtil
     ],
-    exports: [WeChatAppPayService, WeChatAppletPayService, WeChatJSAPIPayService, WeChatMicroPayService, WeChatNativePayService, WeChatWapPayService]
+    exports: [
+        WeChatAppPayService,
+        WeChatAppletPayService,
+        WeChatJSAPIPayService,
+        WeChatMicroPayService,
+        WeChatNativePayService,
+        WeChatWapPayService,
+        WeChatNotifyParserUtil
+    ]
 })
 export class WeChatPayModule implements OnModuleInit {
     /** 沙箱环境获取验签秘钥接口地址 */
