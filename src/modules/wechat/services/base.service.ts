@@ -86,7 +86,7 @@ export class WeChatPayBaseService {
         if (!params.out_trade_no && !params.transaction_id && !params.out_refund_no && !params.refund_id) {
             throw new Error('参数有误，out_trade_no、transaction_id、out_refund_no 和 refund_id 四选一');
         }
-        return await this.requestUtil.post<WeChatBaseQueryRefundRes>(this.queryOrderUrl, params);
+        return await this.requestUtil.post<WeChatBaseQueryRefundRes>(this.refundQueryUrl, params);
     }
 
     /**
