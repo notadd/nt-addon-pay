@@ -1,5 +1,5 @@
 /** 微信支付交易类型 */
-export enum WechatTradeType {
+export enum WeChatTradeType {
     /** JSAPI、小程序支付 */
     JSAPI = 'JSAPI',
     /** 扫码支付 */

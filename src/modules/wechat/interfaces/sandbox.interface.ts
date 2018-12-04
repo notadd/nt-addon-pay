@@ -1,4 +1,4 @@
-export interface WechatSandboxResponse {
+export interface WeChatSandboxResponse {
     /** 返回状态码 */
     return_code: string;
     /** 返回信息 */

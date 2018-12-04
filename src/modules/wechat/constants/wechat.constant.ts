@@ -1,1 +1,1 @@
-export const WechatCertificateAgentProvider = 'WechatCertificateAgentProvider';
+export const WeChatCertificateAgentProvider = 'WeChatCertificateAgentProvider';

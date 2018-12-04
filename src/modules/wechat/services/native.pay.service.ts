@@ -1,19 +1,19 @@
 import { Injectable } from '@nestjs/common';
 
-import { WechatOtherPayOrderReqParam, WechatOtherPayOrderRes } from '../interfaces/order.interface';
-import { WechatPayBaseService } from './base.service';
+import { WeChatOtherPayOrderReqParam, WeChatOtherPayOrderRes } from '../interfaces/order.interface';
+import { WeChatPayBaseService } from './base.service';
 
 /**
  * 微信支付-Native支付类
  */
 @Injectable()
-export class WechatNativePayService extends WechatPayBaseService {
+export class WeChatNativePayService extends WeChatPayBaseService {
     /**
      * 扫码支付
      *
      * @param params 扫码支付接口请求参数
      */
-    async pay(params: WechatOtherPayOrderReqParam): Promise<WechatOtherPayOrderRes> {
-        return await this.requestUtil.post<WechatOtherPayOrderRes>(this.unifiedOrderUrl, params);
+    async pay(params: WeChatOtherPayOrderReqParam): Promise<WeChatOtherPayOrderRes> {
+        return await this.requestUtil.post<WeChatOtherPayOrderRes>(this.unifiedOrderUrl, params);
     }
 }

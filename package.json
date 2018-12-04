@@ -1,6 +1,6 @@
 {
     "name": "nt-addon-pay",
-    "version": "0.3.0",
+    "version": "0.3.1",
     "description": "The pay addon for notadd application",
     "scripts": {
         "start": "ts-node -r tsconfig-paths/register starter/main.ts",
@@ -45,7 +45,7 @@
         "transform": {
             "^.+\\.(t|j)s$": "ts-jest"
         },
-        "collectCoverage": true,
+        "collectCoverage": false,
         "collectCoverageFrom": [
             "src/**/*.service.ts",
             "!src/modules/wechat/services/base.service.ts"

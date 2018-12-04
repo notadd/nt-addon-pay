@@ -2,7 +2,7 @@ import { DynamicModule, Inject, Module, OnModuleInit } from '@nestjs/common';
 
 import { PayAddonConfig, PayAddonConfigProvider } from './common';
 import { AliPayModule } from './modules/ali/ali.pay.module';
-import { WechatPayModule } from './modules/wechat/wechat.pay.module';
+import { WeChatPayModule } from './modules/wechat/wechat.pay.module';
 import { SharedModule } from './shared/shared.module';
 
 @Module({})
@@ -14,8 +14,8 @@ export class PayAddon implements OnModuleInit {
     static forRoot(config: PayAddonConfig): DynamicModule {
         return {
             module: PayAddon,
-            imports: [SharedModule.forFeature(config), WechatPayModule, AliPayModule],
-            exports: [WechatPayModule, AliPayModule]
+            imports: [SharedModule.forFeature(config), WeChatPayModule, AliPayModule],
+            exports: [WeChatPayModule, AliPayModule]
         };
     }
 

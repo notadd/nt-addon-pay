@@ -5,7 +5,7 @@ import * as crypto from 'crypto';
  * 微信签名工具
  */
 @Injectable()
-export class WechatSignUtil {
+export class WeChatSignUtil {
     /**
      * 计算微信支付签名
      *
@@ -17,6 +17,7 @@ export class WechatSignUtil {
         const paramArr: string[] = [];
         const sortedKeys = Object.keys(params).sort();
         for (const key of sortedKeys) {
+            if (key === 'sign') continue;
             params[key] && paramArr.push(`${key}=${params[key]}`);
         }
         let signStr = paramArr.join('&');

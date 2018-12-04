@@ -30,25 +30,84 @@ import { PayAddon } from '@notadd/addon-pay';
 export class ApplicationModule {}
 ```
 
-### 使用 Wechat`XXX`PayService
+### 微信支付
+
+#### 使用 WeChat`XXX`PayService 调用 API
+
+WeChat`XXX`PayService 类包含当前支付方式的支付、订单、退款相关 API，调用方式如下(扫码支付)：
 
 ```typescript
 import { Injectable, Inject } from '@nestjs/common';
-import { WechatNativePayService, WechatTradeType } from '@notadd/addon-pay';
+import { WeChatNativePayService, WeChatTradeType } from '@notadd/addon-pay';
 
 @Injectable()
 export class TestPay {
-    constructor(@Inject(WechatNativePayService) private readonly wechatNativePayService: WechatNativePayService) { }
+    constructor(@Inject(WeChatNativePayService) private readonly weChatNativePayService: WeChatNativePayService) { }
 
     async nativePay() {
-        const ressult = await this.wechatNativePayService.pay({
+        const ressult = await this.weChatNativePayService.pay({
             body: '支付一下',
             out_trade_no: '201811271512000001',
             total_fee: 301,
-            spbill_create_ip: '127.0.0.1',
-            notify_url: 'your.domain.com/wechat-pay/notify',
-            trade_type: WechatTradeType.JSAPI
+            spbill_create_ip: '127.0.0.1',  // 支付请求方IP
+            notify_url: 'your.domain.com/payment/wechat_order_notify',  // 服务端支付通知地址
+            trade_type: WeChatTradeType.JSAPI
         });
+    }
+}
+```
+
+#### 使用 WeChatNotifyParserUtil 解析支付/退款通知
+
+```typescript
+import { Controller, Inject, Post, Req } from '@nestjs/common';
+
+import { WeChatNotifyParserUtil } from '@notadd/addon-pay';
+
+@Controller('payment')
+export class PaymentNotifyController {
+    constructor(
+        @Inject(WeChatNotifyParserUtil) private readonly weChatNotifyParserUtil: WeChatNotifyParserUtil
+    ) { }
+
+    /**
+     * 微信支付统一下单通知路由
+     *
+     * @param req 通知请求
+     */
+    @Post('wechat_order_notify')
+    async weChatOrderNotify(@Req() req) {
+        // 当 data 为 undefined 时，表示通知请求中的 sign 验签失败
+        const data = await this.weChatNotifyParserUtil.parsePayNotify(req);
+
+        // 失败时返回
+        if (!data) {
+            const errMsg = '验签失败';  // 可根据业务自定定义错误信息
+            return this.weChatNotifyParserUtil.generateFailMessage(errMsg);
+        }
+
+        // 成功时返回
+        return this.weChatNotifyParserUtil.generateSuccessMessage();
+    }
+
+    /**
+     * 微信支付退款通知路由
+     *
+     * @param req 通知请求
+     */
+    @Post('wechat_refund_notify')
+    async weChatRefundNotify(@Req() req) {
+        // 当 data 为 undefined 时，表示通知请求中的 req_info 解密失败
+        const data = await this.weChatNotifyParserUtil.parseRefundNotify(req);
+
+        // 失败时返回
+        if (!data) {
+            const errMsg = '解密失败';  // 可根据业务自定定义错误信息
+            return this.weChatNotifyParserUtil.generateFailMessage(errMsg);
+        }
+
+        // 成功时返回
+        return this.weChatNotifyParserUtil.generateSuccessMessage();
     }
 }
 ```

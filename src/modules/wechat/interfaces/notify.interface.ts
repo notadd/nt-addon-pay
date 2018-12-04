@@ -1,5 +1,5 @@
 /** 微信支付结果通知返回值 */
-export interface WechatPayBaseNotifyRes {
+export interface WeChatPayNotifyRes {
     /** 返回状态码 */
     return_code: string;
     /** 返回信息 */
@@ -52,4 +52,46 @@ export interface WechatPayBaseNotifyRes {
     attach?: string;
     /** 支付完成时间 */
     time_end: string;
+}
+
+/** 微信退款结果通知返回值 */
+export interface WeChatRefundNotifyRes {
+    /** 返回状态码 */
+    return_code: string;
+    /** 返回信息 */
+    return_msg: string;
+    /** 公众账号ID */
+    appid: string;
+    /** 退款的商户号 */
+    mdc_id: string;
+    /** 随机字符串 */
+    nonce_str: string;
+    /** 加密信息 */
+    req_info: string;
+    /** 微信订单号 */
+    transaction_id: string;
+    /** 商户订单号 */
+    out_trade_no: string;
+    /** 微信退款单号 */
+    refund_id: string;
+    /** 商户退款单号 */
+    out_refund_no: string;
+    /** 订单金额 */
+    total_fee: number;
+    /** 应结订单金额 */
+    settlement_total_fee?: number;
+    /** 申请退款金额 */
+    refund_fee: number;
+    /** 退款金额 */
+    settlement_refund_fee: number;
+    /** 退款状态 */
+    refund_status: string;
+    /** 退款成功时间 */
+    success_time?: string;
+    /** 退款入账账户 */
+    refund_recv_account: string;
+    /** 退款资金来源 */
+    refund_account: string;
+    /** 退款发起来源 */
+    refund_request_source: string;
 }
