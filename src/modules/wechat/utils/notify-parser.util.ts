@@ -7,6 +7,9 @@ import { XmlUtil } from '../../../shared/utils/xml.util';
 import { WeChatPayNotifyRes, WeChatRefundNotifyRes } from '../interfaces/notify.interface';
 import { WeChatSignUtil } from './sign.util';
 
+/**
+ * 微信支付通知解析工具
+ */
 @Injectable()
 export class WeChatNotifyParserUtil {
     constructor(
@@ -61,6 +64,28 @@ export class WeChatNotifyParserUtil {
 
         Object.assign(result, JSON.parse(decryptedStr));
         return result;
+    }
+
+    /**
+     * 生成通知成功返回值
+     */
+    public generateSuccessMessage() {
+        return this.xmlUtil.convertObjToXml({
+            return_code: 'SUCCESS',
+            return_msg: 'OK'
+        });
+    }
+
+    /**
+     * 生成通知失败返回值
+     *
+     * @param errMsg 失败原因
+     */
+    public generateFailMessage(errMsg: string) {
+        return this.xmlUtil.convertObjToXml({
+            return_code: 'FAIL',
+            return_msg: errMsg
+        });
     }
 
     /**
