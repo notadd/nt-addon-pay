@@ -1,5 +1,5 @@
 /** 微信支付初始化配置 */
-interface PayAddonWeChatConfig {
+export interface WeChatPayConfig {
     /** 公众账号APPID或应用APPID */
     appid: string;
     /** 微信支付商户号 */
@@ -15,14 +15,14 @@ interface PayAddonWeChatConfig {
 }
 
 /** 支付宝支付初始化配置 */
-interface PayAddonAliConfig {
+export interface AliPayConfig {
 
 }
 
 /** 支付插件初始化配置 */
 export interface PayAddonConfig {
     /** 微信支付初始化配置 */
-    wechatConfig?: PayAddonWeChatConfig;
+    wechatConfig?: WeChatPayConfig;
     /** 支付宝支付初始化配置 */
-    aliConfig?: PayAddonAliConfig;
+    aliConfig?: AliPayConfig;
 }

@@ -1,8 +1,8 @@
 import { Inject, Injectable } from '@nestjs/common';
 import * as https from 'https';
 
-import { PayAddonConfig, PayAddonConfigProvider } from '../../../common';
-import { WeChatCertificateAgentProvider } from '../constants/wechat.constant';
+import { WeChatPayConfig } from '../../../common';
+import { WeChatPayCertificateAgentProvider, WeChatPayConfigProvider } from '../constants/wechat.constant';
 import {
     WeChatBaseCloseOrderReqParam,
     WeChatBaseCloseOrderRes,
@@ -23,7 +23,7 @@ import { WeChatRequestUtil } from '../utils/request.util';
 @Injectable()
 export class WeChatPayBaseService {
     /** API 接口域名 */
-    protected apiBase = 'https://api.mch.weixin.qq.com' + (this.payAddonConfig.wechatConfig.sandbox ? '/sandboxnew' : '');
+    protected apiBase = 'https://api.mch.weixin.qq.com' + (this.config.sandbox ? '/sandboxnew' : '');
     /** 统一下单接口地址 */
     protected readonly unifiedOrderUrl = `${this.apiBase}/pay/unifiedorder`;
     /** 查询订单接口地址 */
@@ -40,8 +40,8 @@ export class WeChatPayBaseService {
     protected readonly downloadFundFlowUrl = `${this.apiBase}/pay/downloadfundflow`;
 
     constructor(
-        @Inject(PayAddonConfigProvider) protected readonly payAddonConfig: PayAddonConfig,
-        @Inject(WeChatCertificateAgentProvider) protected readonly certificateAgent: https.Agent,
+        @Inject(WeChatPayConfigProvider) private readonly config: WeChatPayConfig,
+        @Inject(WeChatPayCertificateAgentProvider) protected readonly certificateAgent: https.Agent,
         @Inject(WeChatRequestUtil) protected readonly requestUtil: WeChatRequestUtil
     ) { }
 
@@ -93,7 +93,7 @@ export class WeChatPayBaseService {
      * 检查是否覆盖默认的签名类型
      */
     protected checkOverrideDefaultSignType(params: any) {
-        const signType = this.payAddonConfig.wechatConfig.sign_type;
+        const signType = this.config.sign_type;
         if (signType) {
             (params as any).sign_type = signType;
         }
