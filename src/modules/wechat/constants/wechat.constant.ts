@@ -1,1 +1,2 @@
-export const WeChatCertificateAgentProvider = 'WeChatCertificateAgentProvider';
+export const WeChatPayCertificateAgentProvider = 'WeChatPayCertificateAgentProvider';
+export const WeChatPayConfigProvider = 'WeChatPayConfigProvider';

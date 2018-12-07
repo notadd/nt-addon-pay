@@ -1,9 +1,10 @@
 import { HttpService, Inject, Injectable } from '@nestjs/common';
 import * as axios from 'axios';
 
-import { PayAddonConfig, PayAddonConfigProvider } from '../../../common';
+import { WeChatPayConfig } from '../../../common';
 import { RandomUtil } from '../../../shared/utils/random.util';
 import { XmlUtil } from '../../../shared/utils/xml.util';
+import { WeChatPayConfigProvider } from '../constants/wechat.constant';
 import { WeChatSignUtil } from './sign.util';
 
 /**
@@ -13,7 +14,7 @@ import { WeChatSignUtil } from './sign.util';
 export class WeChatRequestUtil {
     constructor(
         @Inject(HttpService) private readonly httpService: HttpService,
-        @Inject(PayAddonConfigProvider) private readonly payAddonConfig: PayAddonConfig,
+        @Inject(WeChatPayConfigProvider) private readonly config: WeChatPayConfig,
         @Inject(XmlUtil) private readonly xmlUtil: XmlUtil,
         @Inject(WeChatSignUtil) private readonly signUtil: WeChatSignUtil,
         @Inject(RandomUtil) private readonly randomUtil: RandomUtil
@@ -27,7 +28,7 @@ export class WeChatRequestUtil {
      * @param config AxiosRequestConfig
      */
     async post<T>(url: string, params: any, config?: axios.AxiosRequestConfig): Promise<T> {
-        const wechatConfig = this.payAddonConfig.wechatConfig;
+        const wechatConfig = this.config;
         params.appid = wechatConfig.appid;
         params.mch_id = wechatConfig.mch_id;
         params.nonce_str = this.randomUtil.genRandomStr();

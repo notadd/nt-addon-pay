@@ -2,8 +2,9 @@ import { Inject, Injectable } from '@nestjs/common';
 import * as crypto from 'crypto';
 import { IncomingMessage } from 'http';
 
-import { PayAddonConfig, PayAddonConfigProvider } from '../../../common';
+import { WeChatPayConfig } from '../../../common';
 import { XmlUtil } from '../../../shared/utils/xml.util';
+import { WeChatPayConfigProvider } from '../constants/wechat.constant';
 import { WeChatPayNotifyRes, WeChatRefundNotifyRes } from '../interfaces/notify.interface';
 import { WeChatSignUtil } from './sign.util';
 
@@ -13,7 +14,7 @@ import { WeChatSignUtil } from './sign.util';
 @Injectable()
 export class WeChatNotifyParserUtil {
     constructor(
-        @Inject(PayAddonConfigProvider) protected readonly payAddonConfig: PayAddonConfig,
+        @Inject(WeChatPayConfigProvider) protected readonly config: WeChatPayConfig,
         @Inject(XmlUtil) private readonly xmlUtil: XmlUtil,
         @Inject(WeChatSignUtil) private readonly signUtil: WeChatSignUtil
     ) { }
@@ -29,8 +30,8 @@ export class WeChatNotifyParserUtil {
             return undefined;
         }
 
-        const secretKey = this.payAddonConfig.wechatConfig.secretKey;
-        const signType = this.payAddonConfig.wechatConfig.sign_type;
+        const secretKey = this.config.secretKey;
+        const signType = this.config.sign_type;
         const result = await this.xmlUtil.parseObjFromXml<WeChatPayNotifyRes>(data);
 
         if (result.return_code !== 'SUCCESS') {
@@ -55,7 +56,7 @@ export class WeChatNotifyParserUtil {
         }
         const result = await this.xmlUtil.parseObjFromXml<WeChatRefundNotifyRes>(data);
 
-        const secretKey = this.payAddonConfig.wechatConfig.secretKey;
+        const secretKey = this.config.secretKey;
         const cryptedBase64Str = Buffer.from(result.req_info).toString('base64');
         const secretKeyMD5 = crypto.createHash('md5').update(secretKey).digest('hex').toLocaleLowerCase();
 
