@@ -28,7 +28,6 @@ export class WeChatMicroPayService extends WeChatPayBaseService {
      */
     async closeOrder(params: WeChatMicroPayReverseOrderReqParam): Promise<WeChatMicroPayReverseOrderRes> {
         const url = `${this.apiBase}/pay/reverse`;
-        this.checkOverrideDefaultSignType(params);
         return await this.requestUtil.post<WeChatMicroPayReverseOrderRes>(url, params, { httpsAgent: this.certificateAgent });
     }
 }
