@@ -1,22 +1,35 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
+import * as https from 'https';
 
+import { WeChatPayConfig } from '../../../common';
+import { WeChatPayCertificateAgentProvider, WeChatPayConfigProvider } from '../constants/wechat.constant';
 import {
     WeChatQueryRedpackRecordReqParam,
     WeChatQueryRedpackRecordRes,
     WeChatRedpackReqParam,
     WeChatRedpackRes
 } from '../interfaces/redpack.interface';
-import { WeChatPayBaseService } from './base.service';
+import { WeChatRequestUtil } from '../utils/request.util';
 
 /**
  * 微信支付-现金红包支付类
  */
 @Injectable()
-export class WeChatRedpackService extends WeChatPayBaseService {
+export class WeChatRedpackService {
+    /** API 接口域名 */
     private readonly redpackApiBase = 'https://api.mch.weixin.qq.com' + (this.config.sandbox ? '/sandboxnew' : '') + '/mmpaymkttransfers';
+    /** 发放普通红包接口地址 */
     private readonly sendredpackUrl = `${this.redpackApiBase}/sendredpack`;
+    /** 发放裂变红包接口地址 */
     private readonly sendgroupredpackUrl = `${this.redpackApiBase}/sendgroupredpack`;
+    /** 查询红包记录接口地址 */
     private readonly gethbinfoUrl = `${this.redpackApiBase}/gethbinfo`;
+
+    constructor(
+        @Inject(WeChatPayConfigProvider) private readonly config: WeChatPayConfig,
+        @Inject(WeChatPayCertificateAgentProvider) private readonly certificateAgent: https.Agent,
+        @Inject(WeChatRequestUtil) private readonly requestUtil: WeChatRequestUtil
+    ) { }
 
     /**
      * 发放普通红包
