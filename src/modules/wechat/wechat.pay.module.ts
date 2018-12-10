@@ -13,6 +13,7 @@ import { WeChatPayBaseService } from './services/base.service';
 import { WeChatJSAPIPayService } from './services/jsapi.pay.service';
 import { WeChatMicroPayService } from './services/micro.pay.service';
 import { WeChatNativePayService } from './services/native.pay.service';
+import { WeChatRedpackService } from './services/redpack.service';
 import { WeChatWapPayService } from './services/wap.pay.service';
 import { WeChatNotifyParserUtil } from './utils/notify-parser.util';
 import { WeChatRequestUtil } from './utils/request.util';
@@ -42,6 +43,7 @@ export class WeChatPayModule implements OnModuleInit {
                 WeChatMicroPayService,
                 WeChatNativePayService,
                 WeChatWapPayService,
+                WeChatRedpackService,
                 WeChatSignUtil,
                 WeChatRequestUtil,
                 WeChatNotifyParserUtil,
@@ -55,6 +57,7 @@ export class WeChatPayModule implements OnModuleInit {
                 WeChatMicroPayService,
                 WeChatNativePayService,
                 WeChatWapPayService,
+                WeChatRedpackService,
                 WeChatNotifyParserUtil
             ]
         };

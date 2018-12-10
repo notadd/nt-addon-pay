@@ -28,15 +28,20 @@ export class WeChatRequestUtil {
      * @param config AxiosRequestConfig
      */
     async post<T>(url: string, params: any, config?: axios.AxiosRequestConfig): Promise<T> {
-        const wechatConfig = this.config;
-        params.appid = wechatConfig.appid;
-        params.mch_id = wechatConfig.mch_id;
+        // 现金红包特例 wxappid
+        if (Object.keys(params).includes('wxappid')) {
+            params.wxappid = this.config.appid;
+        } else {
+            params.appid = this.config.appid;
+        }
+        params.mch_id = this.config.mch_id;
         params.nonce_str = this.randomUtil.genRandomStr();
-        params.sign = this.signUtil.sign(params, wechatConfig.secretKey, wechatConfig.sign_type);
+        params.sign_type = this.config.sign_type ? this.config.sign_type : 'MD5';
+        params.sign = this.signUtil.sign(params, this.config.secretKey, this.config.sign_type);
         try {
             const { data } = await this.httpService.post<T>(url, this.xmlUtil.convertObjToXml(params), config).toPromise();
             if ((data as any).return_code === 'SUCCESS') {
-                if (params.sign !== (data as any).sign) throw new Error('微信支付接口返回签名有误');
+                if (params.sign && params.sign !== (data as any).sign) throw new Error('微信支付接口返回签名有误');
             }
             return this.xmlUtil.parseObjFromXml<T>(data);
         } catch (error) {

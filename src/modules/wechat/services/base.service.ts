@@ -40,7 +40,7 @@ export class WeChatPayBaseService {
     protected readonly downloadFundFlowUrl = `${this.apiBase}/pay/downloadfundflow`;
 
     constructor(
-        @Inject(WeChatPayConfigProvider) private readonly config: WeChatPayConfig,
+        @Inject(WeChatPayConfigProvider) protected readonly config: WeChatPayConfig,
         @Inject(WeChatPayCertificateAgentProvider) protected readonly certificateAgent: https.Agent,
         @Inject(WeChatRequestUtil) protected readonly requestUtil: WeChatRequestUtil
     ) { }
@@ -52,7 +52,6 @@ export class WeChatPayBaseService {
      */
     public async queryOrder(params: WeChatBaseQueryOrderReqParam): Promise<WeChatBaseQueryOrderRes> {
         if (!params.out_trade_no && !params.transaction_id) throw new Error('参数有误，out_trade_no 和 transaction_id 二选一');
-        this.checkOverrideDefaultSignType(params);
         return await this.requestUtil.post<WeChatBaseQueryOrderRes>(this.queryOrderUrl, params);
     }
 
@@ -62,7 +61,6 @@ export class WeChatPayBaseService {
      * @param params 关闭订单请求参数
      */
     public async closeOrder(params: WeChatBaseCloseOrderReqParam): Promise<WeChatBaseCloseOrderRes> {
-        this.checkOverrideDefaultSignType(params);
         return await this.requestUtil.post<WeChatBaseCloseOrderRes>(this.closeOrderUrl, params);
     }
 
@@ -73,7 +71,6 @@ export class WeChatPayBaseService {
      */
     public async refund(params: WeChatBaseRefundReqParam): Promise<WeChatBaseRefundRes> {
         if (!params.out_trade_no && !params.transaction_id) throw new Error('参数有误，out_trade_no 和 transaction_id 二选一');
-        this.checkOverrideDefaultSignType(params);
         return await this.requestUtil.post<WeChatBaseRefundRes>(this.refundUrl, params, { httpsAgent: this.certificateAgent });
     }
 
@@ -87,15 +84,5 @@ export class WeChatPayBaseService {
             throw new Error('参数有误，out_trade_no、transaction_id、out_refund_no 和 refund_id 四选一');
         }
         return await this.requestUtil.post<WeChatBaseQueryRefundRes>(this.refundQueryUrl, params);
-    }
-
-    /**
-     * 检查是否覆盖默认的签名类型
-     */
-    protected checkOverrideDefaultSignType(params: any) {
-        const signType = this.config.sign_type;
-        if (signType) {
-            (params as any).sign_type = signType;
-        }
     }
 }
