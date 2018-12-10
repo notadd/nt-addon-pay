@@ -131,6 +131,13 @@ export class PaymentNotifyController {
 }
 ```
 
+#### 如何使用支付验收 case ？
+
+两种方式，如下：
+
+1. 关注微信公众号：微信支付商户接入验收助手，并查阅相应支付验收 case 示例。
+2. 下载支付验收case示例 pdf 文档。地址：[免充值产品测试验收用例](https://pay.weixin.qq.com/wiki/doc/api/download/mczyscsyl.pdf) 。
+
 ## 贡献说明
 
 我们欢迎 Nest.js 使用者来参与这个插件的开发，作为一个贡献者，请您遵循以下原则：
