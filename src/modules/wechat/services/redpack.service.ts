@@ -24,6 +24,7 @@ export class WeChatRedpackService extends WeChatPayBaseService {
      * @param params 发放普通红包请求参数
      */
     async sendRedpack(params: WeChatRedpackReqParam): Promise<WeChatRedpackRes> {
+        (params as any).wxappid = '';
         return await this.requestUtil.post<WeChatRedpackRes>(this.sendredpackUrl, params, { httpsAgent: this.certificateAgent });
     }
 
@@ -33,6 +34,7 @@ export class WeChatRedpackService extends WeChatPayBaseService {
      * @param params 发放裂变红包请求参数
      */
     async sendGroupRedpack(params: WeChatRedpackReqParam): Promise<WeChatRedpackRes> {
+        (params as any).wxappid = '';
         (params as any).amt_type = 'ALL_RAND';
         return await this.requestUtil.post<WeChatRedpackRes>(this.sendgroupredpackUrl, params, { httpsAgent: this.certificateAgent });
     }

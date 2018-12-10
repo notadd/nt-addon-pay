@@ -41,7 +41,7 @@ export class WeChatRequestUtil {
         try {
             const { data } = await this.httpService.post<T>(url, this.xmlUtil.convertObjToXml(params), config).toPromise();
             if ((data as any).return_code === 'SUCCESS') {
-                if (params.sign !== (data as any).sign) throw new Error('微信支付接口返回签名有误');
+                if (params.sign && params.sign !== (data as any).sign) throw new Error('微信支付接口返回签名有误');
             }
             return this.xmlUtil.parseObjFromXml<T>(data);
         } catch (error) {
