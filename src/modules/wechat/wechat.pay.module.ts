@@ -66,6 +66,8 @@ export class WeChatPayModule implements OnModuleInit {
     async onModuleInit() {
         if (!this.config.sandbox) return;
 
+        // 如果启用了沙箱环境，sign_type(签名类型)只能为MD5，必须强制改写签名类型以防止初始化时传入错误的签名类型
+        this.config.sign_type = 'MD5';
         const sandboxSignKeyExipre = this.checkSandboxSignKeyExpire();
         if (!sandboxSignKeyExipre) {
             const fileContent = fs.readFileSync(path.join(__dirname, this.sandboxSignKeyFileName)).toString();
