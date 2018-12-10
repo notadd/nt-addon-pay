@@ -21,8 +21,9 @@ import { PayAddon } from '@notadd/addon-pay';
             appid: 'appid',     // 公众号appi/应用appid/小程序appid
             mch_id: 'mch_id',   // 商户号
             secretKey: 'secretKey', // 商户交易秘钥
+            sign_type: 'MD5',       // 微信支付签名类型('MD5' | 'HMAC-SHA256')，默认MD5，配置后，所有接口参数均会使用这个签名类型
             pfx: fs.readFileSync('path_to_p12_file'),   // p12文件
-            sandbox: true   // 是否启用沙箱环境，默认不启用
+            sandbox: true   // 是否启用沙箱环境，默认不启用，用于商户支付验收测试
         }
     })
   ]
@@ -32,9 +33,27 @@ export class ApplicationModule {}
 
 ### 微信支付
 
+接口使用前的必要声明：
+
+1. 所有的接口请求参数和接口返回结果中的属性名全部使用的是 **`snake_case`**，其中属性名结尾带 **`?`** 的代表这个属性是可选的(非必填)。
+2. 所有与金额相关的数据全部是 **`number`** 类型且单位为 **`分`**，需自行转换。
+3. 所有接口参数中的 `mch_id`、`appid/wxappid`、`nonce_str`、`sign_type`、`sign` 数据均由插件自动填入，无需手动传入。
+4. 所有请求的返回结果若有 `sign`，插件会自动验签。
+5. 支付通知结果插件会自动验签，退款通知结果插件会自动解密 `req_info` 数据。
+
 #### 使用 WeChat`XXX`PayService 调用 API
 
-WeChat`XXX`PayService 类包含当前支付方式的支付、订单、退款相关 API，调用方式如下(扫码支付)：
+WeChat`XXX`PayService 类包含当前支付方式的支付、订单、退款相关 API，各支付类说明：
+
+- WeChatAppPayService —— APP支付
+- WeChatAppletPayService —— 小程序支付
+- WeChatJSAPIPayService —— JSAPI支付（用户通过微信扫码、关注公众号等方式进入商家H5页面，并在微信内调用JSSDK完成支付）
+- WeChatMicroPayService —— 付款码支付（用户打开微信钱包-付款码的界面，商户扫码后提交完成支付）
+- WeChatNativePayService —— Native支付（扫码支付）
+- WeChatWapPayService —— H5支付（用户在微信以外的手机浏览器请求微信支付的场景唤起微信支付）
+- WeChatRedpackService —— 现金红包
+
+例子：Native支付（扫码支付）调用方式如下
 
 ```typescript
 import { Injectable, Inject } from '@nestjs/common';
