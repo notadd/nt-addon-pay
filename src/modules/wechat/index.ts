@@ -4,5 +4,6 @@ export * from './services/jsapi.pay.service';
 export * from './services/micro.pay.service';
 export * from './services/native.pay.service';
 export * from './services/wap.pay.service';
+export * from './services/redpack.service';
 export * from './enums/trade-type.enum';
 export * from './utils/notify-parser.util';
