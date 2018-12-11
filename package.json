@@ -1,6 +1,6 @@
 {
     "name": "nt-addon-pay",
-    "version": "0.4.2",
+    "version": "0.5.0",
     "description": "The pay addon for notadd application",
     "scripts": {
         "start": "ts-node -r tsconfig-paths/register starter/main.ts",

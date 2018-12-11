@@ -28,13 +28,14 @@ export class WeChatRequestUtil {
      * @param config AxiosRequestConfig
      */
     async post<T>(url: string, params: any, config?: axios.AxiosRequestConfig): Promise<T> {
-        // 现金红包特例 wxappid
-        if (Object.keys(params).includes('wxappid')) {
-            params.wxappid = this.config.appid;
-        } else {
+        // 用于处理现金红包、企业付款、获取RSA公钥接口请求参数(属性不一致或不存在)
+        if ((!params.wxappid || !params.mch_appid) && Object.keys(params).length) {
             params.appid = this.config.appid;
         }
-        params.mch_id = this.config.mch_id;
+        // 用于处理企业付款接口请求参数(属性不一致或不存在)
+        if (!params.mchid) {
+            params.mch_id = this.config.mch_id;
+        }
         params.nonce_str = this.randomUtil.genRandomStr();
         params.sign_type = this.config.sign_type ? this.config.sign_type : 'MD5';
         params.sign = this.signUtil.sign(params, this.config.secretKey, this.config.sign_type);
