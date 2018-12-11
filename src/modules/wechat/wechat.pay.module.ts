@@ -14,6 +14,7 @@ import { WeChatJSAPIPayService } from './services/jsapi.pay.service';
 import { WeChatMicroPayService } from './services/micro.pay.service';
 import { WeChatNativePayService } from './services/native.pay.service';
 import { WeChatRedpackService } from './services/redpack.service';
+import { WeChatTransferService } from './services/transfer.service';
 import { WeChatWapPayService } from './services/wap.pay.service';
 import { WeChatNotifyParserUtil } from './utils/notify-parser.util';
 import { WeChatRequestUtil } from './utils/request.util';
@@ -23,6 +24,7 @@ import { WeChatSignUtil } from './utils/sign.util';
 export class WeChatPayModule implements OnModuleInit {
     /** 沙箱环境获取验签秘钥接口地址 */
     private readonly sandboxGetSignKeyUrl = 'https://api.mch.weixin.qq.com/sandboxnew/pay/getsignkey';
+    /** 沙箱密钥文件名 */
     private readonly sandboxSignKeyFileName = '.sandbox_signkey.txt';
 
     constructor(
@@ -44,6 +46,7 @@ export class WeChatPayModule implements OnModuleInit {
                 WeChatNativePayService,
                 WeChatWapPayService,
                 WeChatRedpackService,
+                WeChatTransferService,
                 WeChatSignUtil,
                 WeChatRequestUtil,
                 WeChatNotifyParserUtil,
@@ -58,6 +61,7 @@ export class WeChatPayModule implements OnModuleInit {
                 WeChatNativePayService,
                 WeChatWapPayService,
                 WeChatRedpackService,
+                WeChatTransferService,
                 WeChatNotifyParserUtil
             ]
         };
