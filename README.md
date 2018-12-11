@@ -52,6 +52,7 @@ WeChat`XXX`PayService 类包含当前支付方式的支付、订单、退款相�
 - WeChatNativePayService —— Native支付（扫码支付）
 - WeChatWapPayService —— H5支付（用户在微信以外的手机浏览器请求微信支付的场景唤起微信支付）
 - WeChatRedpackService —— 现金红包
+- WeChatTransferService —— 企业付款
 
 例子：Native支付（扫码支付）调用方式如下
 
