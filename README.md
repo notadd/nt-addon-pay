@@ -190,7 +190,7 @@ export class PaymentNotifyController {
 - 代码提交规范，参考 [Git Commit Message Conventions](https://docs.google.com/document/d/1QrDFcIiPjSLDn3EL15IJygNPiHORgU1_OOAqWjiDU5Y/edit#)
 - 始终从 develop checkout 一个新分支，命名规范为 feature/xxx，xxx 必须具有可读性，如：微信-普通商户版-扫码支付 => feature/wechat-native-pay
 - 在 checkout 新分支前，先在本地 develop 分支拉取远程 develop 分支的最新代码
-- 文件命名规则请参考项目目前的命名规则，如：微信支付中，order.interface.ts 代表所有订单相关的请求参数和返回结果的定义，swipe.pay.service.ts 代表付款码支付的业务逻辑
+- 文件命名规则请参考项目目前的命名规则，如：微信支付中，order.interface.ts 代表所有订单相关的请求参数和返回结果的定义，micro.pay.service.ts 代表付款码支付的业务逻辑
 
 ## 功能开发
 
