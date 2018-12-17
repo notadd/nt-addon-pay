@@ -29,16 +29,28 @@ export class WeChatRequestUtil {
      */
     async post<T>(url: string, params: any, config?: axios.AxiosRequestConfig): Promise<T> {
         // 用于处理现金红包、企业付款、获取RSA公钥接口请求参数(属性不一致或不存在)
-        if ((!params.wxappid || !params.mch_appid) && Object.keys(params).length) {
+        if (params.wxappid) {
+        } else if (params.mch_appid) {
+        } else {
             params.appid = this.config.appid;
         }
+
         // 用于处理企业付款接口请求参数(属性不一致或不存在)
         if (!params.mchid) {
             params.mch_id = this.config.mch_id;
         }
+
         params.nonce_str = this.randomUtil.genRandomStr();
-        params.sign_type = this.config.sign_type ? this.config.sign_type : 'MD5';
-        params.sign = this.signUtil.sign(params, this.config.secretKey, this.config.sign_type);
+
+        let signType: 'MD5' | 'HMAC-SHA256';
+        if (params.sign_type && params.sign_type === 'no_sign_type') {
+            signType = 'MD5';
+        } else {
+            signType = this.config.sign_type;
+            params.sign_type = this.config.sign_type ? this.config.sign_type : 'MD5';
+        }
+
+        params.sign = this.signUtil.sign(params, this.config.secretKey, signType);
         try {
             const { data } = await this.httpService.post<T>(url, this.xmlUtil.convertObjToXml(params), config).toPromise();
             if ((data as any).return_code === 'SUCCESS') {

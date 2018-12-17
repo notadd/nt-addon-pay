@@ -38,6 +38,7 @@ export class WeChatRedpackService {
      */
     async sendRedpack(params: WeChatRedpackReqParam): Promise<WeChatRedpackRes> {
         (params as any).wxappid = this.config.appid;
+        (params as any).sign_type = 'no_sign_type';
         return await this.requestUtil.post<WeChatRedpackRes>(this.sendredpackUrl, params, { httpsAgent: this.certificateAgent });
     }
 
@@ -49,6 +50,7 @@ export class WeChatRedpackService {
     async sendGroupRedpack(params: WeChatRedpackReqParam): Promise<WeChatRedpackRes> {
         (params as any).wxappid = this.config.appid;
         (params as any).amt_type = 'ALL_RAND';
+        (params as any).sign_type = 'no_sign_type';
         return await this.requestUtil.post<WeChatRedpackRes>(this.sendgroupredpackUrl, params, { httpsAgent: this.certificateAgent });
     }
 
@@ -59,6 +61,7 @@ export class WeChatRedpackService {
      */
     async queryRedpackRecord(params: WeChatQueryRedpackRecordReqParam): Promise<WeChatQueryRedpackRecordRes> {
         (params as any).bill_type = 'MCHT';
+        (params as any).sign_type = 'no_sign_type';
         return await this.requestUtil.post<WeChatQueryRedpackRecordRes>(this.gethbinfoUrl, params, { httpsAgent: this.certificateAgent });
     }
 }
