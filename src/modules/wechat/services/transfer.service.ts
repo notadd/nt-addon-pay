@@ -53,6 +53,7 @@ export class WeChatTransferService {
     async transfer(params: WeChatTransferReqParam): Promise<WeChatTransferRes> {
         (params as any).mchid = this.config.mch_id;
         (params as any).mch_appid = this.config.appid;
+        (params as any).sign_type = 'no_sign_type';
         return await this.requestUtil.post<WeChatTransferRes>(this.transferUrl, params, { httpsAgent: this.certificateAgent });
     }
 
@@ -62,6 +63,7 @@ export class WeChatTransferService {
      * @param params 查询企业付款到零钱接口请求参数
      */
     async queryTransfer(params: WeChatQueryTransferReqParam): Promise<WeChatQueryTransferRes> {
+        (params as any).sign_type = 'no_sign_type';
         return await this.requestUtil.post<WeChatQueryTransferRes>(this.queryTransferUrl, params, { httpsAgent: this.certificateAgent });
     }
 
@@ -73,6 +75,7 @@ export class WeChatTransferService {
     async transferBank(params: WeChatTransferBankReqParam): Promise<WeChatTransferBankRes> {
         params.enc_bank_no = await this.encryptStr(params.enc_bank_no);
         params.enc_true_name = await this.encryptStr(params.enc_true_name);
+        (params as any).sign_type = 'no_sign_type';
         return await this.requestUtil.post<WeChatTransferBankRes>(this.transferBankUrl, params, { httpsAgent: this.certificateAgent });
     }
 
@@ -82,6 +85,7 @@ export class WeChatTransferService {
      * @param params 查询企业付款到银行卡接口请求参数
      */
     async queryTransferBank(params: WeChatQueryTransferBankReqParam): Promise<WeChatQueryTransferBankRes> {
+        (params as any).sign_type = 'no_sign_type';
         return await this.requestUtil.post<WeChatQueryTransferBankRes>(this.queryTransferBankUrl, params, { httpsAgent: this.certificateAgent });
     }
 
