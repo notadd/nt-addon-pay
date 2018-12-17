@@ -96,7 +96,7 @@ export class WeChatTransferService {
     }
 
     /**
-     * 获取RSA公钥e
+     * 获取RSA公钥
      */
     private async getPublicKey(): Promise<string> {
         const pubKeyFilePath = path.join(__dirname, `../${this.rsaPublicKeyFileName}`);
