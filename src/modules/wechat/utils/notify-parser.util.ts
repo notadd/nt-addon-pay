@@ -25,16 +25,13 @@ export class WeChatNotifyParserUtil {
      * @param req 支付结果通知请求
      */
     public async parsePayNotify(req: IncomingMessage): Promise<WeChatPayNotifyRes> {
-        const data = await this.receiveReqData(req);
-        if (data && (data as string).trim().length === 0) {
-            return undefined;
-        }
+        const data = await this.receiveReqData(req, 'pay');
 
         const secretKey = this.config.secretKey;
         const signType = this.config.sign_type;
         const result = await this.xmlUtil.parseObjFromXml<WeChatPayNotifyRes>(data);
 
-        if (result.return_code !== 'SUCCESS') {
+        if (result.return_code === 'FAIL') {
             return result;
         }
         if (result.sign && result.sign !== this.signUtil.sign(result, secretKey, signType)) {
@@ -50,20 +47,27 @@ export class WeChatNotifyParserUtil {
      * @param req 退款结果通知请求
      */
     public async parseRefundNotify(req: IncomingMessage): Promise<WeChatRefundNotifyRes> {
-        const data = await this.receiveReqData(req);
-        if (data && (data as string).trim().length === 0) {
-            return undefined;
-        }
+        const data = await this.receiveReqData(req, 'refund');
         const result = await this.xmlUtil.parseObjFromXml<WeChatRefundNotifyRes>(data);
 
-        const secretKey = this.config.secretKey;
-        const cryptedBase64Str = Buffer.from(result.req_info).toString('base64');
-        const secretKeyMD5 = crypto.createHash('md5').update(secretKey).digest('hex').toLocaleLowerCase();
+        if (result.return_code === 'FAIL') {
+            return result;
+        }
+        if (!(result as any).req_info) {
+            return undefined;
+        }
+        try {
+            const secretKey = this.config.secretKey;
+            const cryptedBase64Str = Buffer.from((result as any).req_info).toString('base64');
+            const secretKeyMD5 = crypto.createHash('md5').update(secretKey).digest('hex').toLocaleLowerCase();
 
-        const decipher = crypto.createDecipheriv('aes-256-ecb', secretKeyMD5, '');
-        const decryptedStr = Buffer.concat([decipher.update(cryptedBase64Str, 'base64'), decipher.final()]).toString();
+            const decipher = crypto.createDecipheriv('aes-256-ecb', secretKeyMD5, '');
+            const decryptedStr = Buffer.concat([decipher.update(cryptedBase64Str, 'base64'), decipher.final()]).toString();
 
-        Object.assign(result, JSON.parse(decryptedStr));
+            Object.assign(result, JSON.parse(decryptedStr));
+        } catch (error) {
+            return undefined;
+        }
         return result;
     }
 
@@ -94,18 +98,28 @@ export class WeChatNotifyParserUtil {
      *
      * @param req 回调通知请求
      */
-    private async receiveReqData(req: IncomingMessage) {
-        return new Promise((resolve, reject) => {
-            let data = '';
-            req.on('data', chunk => {
-                data += chunk;
+    private async receiveReqData(req: IncomingMessage, type: 'pay' | 'refund') {
+        const errType = type === 'pay' ? '支付' : '退款';
+        let xmlStr: string;
+        try {
+            xmlStr = await new Promise<string>((resolve, reject) => {
+                let data = '';
+                req.on('data', chunk => {
+                    data += chunk;
+                });
+                req.on('end', () => {
+                    resolve(data);
+                });
+                req.on('error', error => {
+                    reject(error);
+                });
             });
-            req.on('end', () => {
-                resolve(data);
-            });
-            req.on('error', error => {
-                reject(error);
-            });
-        });
+        } catch (error) {
+            throw new Error(`解析微信${errType}结果通知发生网络异常: ${error.toString()}`);
+        }
+        if (xmlStr.trim().length === 0) {
+            throw new Error(`解析微信${errType}结果通知异常: 数据为空`);
+        }
+        return xmlStr;
     }
 }

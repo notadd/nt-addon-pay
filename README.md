@@ -4,6 +4,8 @@
 
 ## 使用说明
 
+使用前，请确保了解微信支付、支付宝支付的各类支付流程，且具备基本的 `debug` 能力。
+
 ### 安装
 
 `npm install @notadd/addon-pay`
@@ -79,6 +81,14 @@ export class TestPay {
 
 #### 使用 WeChatNotifyParserUtil 解析支付/退款通知
 
+支付/退款完成后，微信会把相关支付/退款结果和用户信息发送给商户，商户需要接收处理，并返回应答。
+
+对后台通知交互时，如果微信收到商户的应答不是成功或超时，微信认为通知失败，微信会通过一定的策略定期重新发起通知，尽可能提高通知的成功率，但微信不保证通知最终能成功。（通知频率为15/15/30/180/1800/1800/1800/1800/3600，单位：秒）
+
+注意：同样的通知可能会多次发送给商户系统。商户系统必须能够正确处理重复的通知。
+
+推荐的做法是，当收到通知进行处理时，首先检查对应业务数据的状态，判断该通知是否已经处理过，如果没有处理过再进行处理，如果处理过直接返回结果成功。在对业务数据进行状态检查和处 理前，要采用数据锁进行并发控制，以避免函数重入造成的数据混乱。
+
 ```typescript
 import { Controller, Inject, Post, Req } from '@nestjs/common';
 
@@ -93,6 +103,10 @@ export class PaymentNotifyController {
     /**
      * 微信支付统一下单通知路由
      *
+     * 特别提醒：商户系统对于支付结果通知的内容一定要做签名验证,并校验返回的订单金额是否与商户侧的订单金额一致，防止数据泄漏导致出现“假通知”，造成资金损失。
+     *
+     * 技术人员可登进微信商户后台扫描加入接口报警群。
+     *
      * @param req 通知请求
      */
     @Post('wechat_order_notify')
@@ -100,10 +114,26 @@ export class PaymentNotifyController {
         // 当 data 为 undefined 时，表示通知请求中的 sign 验签失败
         const data = await this.weChatNotifyParserUtil.parsePayNotify(req);
 
-        // 失败时返回
+        // 验签失败时
         if (!data) {
-            const errMsg = '验签失败';  // 可根据业务自定定义错误信息
-            return this.weChatNotifyParserUtil.generateFailMessage(errMsg);
+            // 微信会重新发起通知
+            return this.weChatNotifyParserUtil.generateFailMessage('验签失败');
+        }
+
+        // 判断返回状态，失败时
+        if(data.return_code === 'FAIL') {
+            // 处理业务数据
+            // ......
+
+            // 根据情况返回成功或失败消息
+        }
+
+        // 判断业务状态，失败时
+        if(data.result_code === 'FAIL') {
+            // 处理业务数据
+            // ......
+
+            // 根据情况返回成功或失败消息
         }
 
         // 成功时返回
@@ -113,6 +143,8 @@ export class PaymentNotifyController {
     /**
      * 微信支付退款通知路由
      *
+     * 特别说明：退款结果对重要的数据进行了加密，商户需要用商户秘钥进行解密后才能获得结果通知的内容。
+     *
      * @param req 通知请求
      */
     @Post('wechat_refund_notify')
@@ -120,10 +152,18 @@ export class PaymentNotifyController {
         // 当 data 为 undefined 时，表示通知请求中的 req_info 解密失败
         const data = await this.weChatNotifyParserUtil.parseRefundNotify(req);
 
-        // 失败时返回
+        // 解密失败时
         if (!data) {
-            const errMsg = '解密失败';  // 可根据业务自定定义错误信息
-            return this.weChatNotifyParserUtil.generateFailMessage(errMsg);
+            // 微信会重新发起通知
+            return this.weChatNotifyParserUtil.generateFailMessage('解密失败');
+        }
+
+        // 判断返回状态，失败时
+        if(data.return_code === 'FAIL') {
+            // 处理业务数据
+            // ......
+
+            // 根据情况返回成功或失败消息
         }
 
         // 成功时返回
@@ -138,6 +178,10 @@ export class PaymentNotifyController {
 
 1. 关注微信公众号：微信支付商户接入验收助手，并查阅相应支付验收 case 示例。
 2. 下载支付验收case示例 pdf 文档。地址：[免充值产品测试验收用例](https://pay.weixin.qq.com/wiki/doc/api/download/mczyscsyl.pdf) 。
+
+### 支付宝支付
+
+*TODO*
 
 ## 贡献说明
 

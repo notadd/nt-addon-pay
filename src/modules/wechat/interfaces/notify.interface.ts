@@ -66,8 +66,6 @@ export interface WeChatRefundNotifyRes {
     mdc_id: string;
     /** 随机字符串 */
     nonce_str: string;
-    /** 加密信息 */
-    req_info: string;
     /** 微信订单号 */
     transaction_id: string;
     /** 商户订单号 */
