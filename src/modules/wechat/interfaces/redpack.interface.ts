@@ -6,7 +6,7 @@ export interface WeChatRedpackReqParam {
     send_name: string;
     /** 用户openid */
     re_openid: string;
-    /** 总金额 */
+    /** 总金额，单位为分 */
     total_amount: number;
     /** 红包发放总人数 */
     total_num: number;
@@ -66,7 +66,7 @@ export interface WeChatRedpackRes {
     wxappid: string;
     /** 用户openid */
     re_openid: string;
-    /** 总金额 */
+    /** 总金额，单位为分 */
     total_amount: number;
     /** 微信单号 */
     send_listid: string;
@@ -132,7 +132,7 @@ export interface WeChatQueryRedpackRecordRes {
     hb_type: string;
     /** 红包个数 */
     total_num: number;
-    /** 红包总金额 */
+    /** 红包总金额，单位为分 */
     total_amount: number;
     /** 失败原因 */
     reason?: string;
@@ -140,7 +140,7 @@ export interface WeChatQueryRedpackRecordRes {
     send_time: string;
     /** 红包退款时间 */
     refund_time?: string;
-    /** 红包退款金额 */
+    /** 红包退款金额，单位为分 */
     refund_amount?: number;
     /** 祝福语 */
     wishing?: string;
@@ -156,7 +156,7 @@ export interface WeChatQueryRedpackRecordRes {
 interface WeChatGroupRedpackReceiveInfo {
     /** 领取红包的openid */
     openid: string;
-    /** 领取金额 */
+    /** 领取金额，单位为分 */
     amount: number;
     /** 接收时间 */
     rcv_time: string;

@@ -20,7 +20,7 @@ export interface WeChatTransferReqParam {
      * 如果 check_name 设置为 FORCE_CHECK，则必填用户真实姓名
      */
     re_user_name?: string;
-    /** 金额 */
+    /** 金额，单位为分 */
     amount: number;
     /** 企业付款备注 */
     desc: string;
@@ -108,7 +108,7 @@ export interface WeChatTransferBankReqParam {
     enc_true_name: string;
     /** 收款方开户行，银行卡所在开户行编号,详见银行编号列表（https://pay.weixin.qq.com/wiki/doc/api/tools/mch_pay.php?chapter=24_4） */
     bank_code: string;
-    /** 付款金额 */
+    /** 付款金额，单位为分 */
     amount: number;
     /** 付款说明 */
     desc?: string;
@@ -130,7 +130,7 @@ export interface WeChatTransferBankRes {
     mch_id: string;
     /** 商户企业付款单号 */
     partner_trade_no: string;
-    /** 代付金额 */
+    /** 代付金额，单位为分 */
     amount: number;
     /** 随机字符串 */
     nonce_str: string;
@@ -170,7 +170,7 @@ export interface WeChatQueryTransferBankRes {
     bank_no_md5: string;
     /** 用户真实姓名(md5加密) */
     true_name_md5: string;
-    /** 代付金额 */
+    /** 代付金额，单位为分 */
     amount: number;
     /** 代付单状态 */
     status: string;
