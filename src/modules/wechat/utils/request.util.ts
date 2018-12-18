@@ -62,4 +62,58 @@ export class WeChatRequestUtil {
             throw new Error('微信支付请求接口时出现网络异常：' + error.toString());
         }
     }
+
+    /**
+     * 检查请求参数单号正确性
+     *
+     * @param params 请求参数
+     */
+    checkParamNo(params: any) {
+        for (const no of ['out_trade_no', 'out_refund_no', 'mch_billno', 'partner_trade_no']) {
+            if (Object.keys(params).includes(no)) {
+                switch (no) {
+                    case 'out_trade_no':
+                        this.regexpTest(params, 'out_trade_no', 32, 'special');
+                        break;
+                    case 'out_refund_no':
+                        this.regexpTest(params, 'out_refund_no', 64, 'special');
+                        break;
+                    case 'mch_billno':
+                        this.regexpTest(params, 'mch_billno', 28, 'normal');
+                        break;
+                    case 'partner_trade_no':
+                        this.regexpTest(params, 'partner_trade_no', 32, 'normal');
+                        break;
+                }
+            }
+        }
+    }
+
+    /**
+     * 参数正则匹配校验
+     *
+     * @param params 参数对象
+     * @param propertyName 参数属性名
+     * @param maxLength 参数值最大长度
+     * @param regexpType 匹配类型
+     */
+    regexpTest(params: any, propertyName: string, maxLength: number, regexpType: 'normal' | 'special') {
+        if (params[propertyName].length > maxLength) {
+            throw new Error(`参数 ${propertyName} 长度不能大于 ${maxLength} 个字符`);
+        }
+
+        const normalRegexp = new RegExp(/^[A-Za-z0-9]+$/, 'g');
+        const specialRegexp = new RegExp(/^[A-Za-z0-9_\-|\*@]+$/, 'g');
+        if (regexpType === 'normal') {
+            if (!normalRegexp.test(params[propertyName])) {
+                throw new Error(`参数 ${propertyName} 只能是字母或者数字`);
+            }
+        }
+
+        if (regexpType === 'special') {
+            if (!specialRegexp.test(params[propertyName])) {
+                throw new Error(`参数 ${propertyName} 只能是数字、大小写字母或_-|*@`);
+            }
+        }
+    }
 }
