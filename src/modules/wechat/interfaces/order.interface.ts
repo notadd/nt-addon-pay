@@ -21,9 +21,17 @@ interface WeChatBaseOrderRequestParam {
     spbill_create_ip: string;
     /** 订单优惠标记 */
     goods_tag?: string;
-    /** 交易起始时间 */
+    /**
+     * 交易起始时间
+     *
+     * 格式为yyyyMMddHHmmss，如2009年12月25日9点10分10秒表示为20091225091010
+     */
     time_start?: string;
-    /** 交易结束时间，建议：最短失效时间间隔大于1分钟 */
+    /**
+     * 交易结束时间，建议：最短失效时间间隔大于1分钟
+     *
+     * 格式为yyyyMMddHHmmss，如2009年12月25日9点10分10秒表示为20091225091010
+     */
     time_expire?: string;
     /** 场景信息 */
     scene_info?: string;

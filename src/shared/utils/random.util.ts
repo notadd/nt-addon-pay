@@ -10,6 +10,6 @@ export class RandomUtil {
      * 生成32位随机字符串
      */
     genRandomStr() {
-        return chance().string({ length: 30, pool: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789' });
+        return chance().string({ length: 32, pool: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789' });
     }
 }
