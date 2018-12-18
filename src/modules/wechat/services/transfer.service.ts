@@ -25,7 +25,7 @@ import { WeChatRequestUtil } from '../utils/request.util';
 @Injectable()
 export class WeChatTransferService {
     /** API 接口域名 */
-    private readonly redpackApiBase = 'https://api.mch.weixin.qq.com' + (this.config.sandbox ? '/sandboxnew' : '');
+    private readonly redpackApiBase = 'https://api.mch.weixin.qq.com';
     /** 企业付款到零钱接口地址 */
     private readonly transferUrl = `${this.redpackApiBase}/mmpaymkttransfers/promotion/transfers`;
     /** 查询企业付款到零钱接口地址 */
