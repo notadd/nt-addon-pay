@@ -45,6 +45,7 @@ export class WeChatRequestUtil {
         let signType: 'MD5' | 'HMAC-SHA256';
         if (params.sign_type && params.sign_type === 'no_sign_type') {
             signType = 'MD5';
+            delete params.sign_type;
         } else {
             signType = this.config.sign_type;
             params.sign_type = this.config.sign_type ? this.config.sign_type : 'MD5';
