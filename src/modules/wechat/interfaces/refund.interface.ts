@@ -2,7 +2,7 @@ import { WeChatBaseResponse } from './base.interface';
 
 /** 微信支付申请退款接口基础请求参数 */
 export interface WeChatBaseRefundReqParam {
-    /** 微信订单号，优先使用 */
+    /** 微信订单号，优先级高于商户订单号 */
     transaction_id?: string;
     /** 商户订单号 */
     out_trade_no?: string;
