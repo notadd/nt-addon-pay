@@ -51,7 +51,7 @@ export class WeChatRequestUtil {
             params.sign_type = this.config.sign_type ? this.config.sign_type : 'MD5';
         }
 
-        params.sign = this.signUtil.sign(params, this.config.secretKey, signType);
+        params.sign = this.signUtil.sign(params, signType);
         try {
             const { data } = await this.httpService.post<T>(url, this.xmlUtil.convertObjToXml(params), config).toPromise();
             if ((data as any).return_code === 'SUCCESS') {

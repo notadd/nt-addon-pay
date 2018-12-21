@@ -27,14 +27,13 @@ export class WeChatNotifyParserUtil {
     public async parsePayNotify(req: IncomingMessage): Promise<WeChatPayNotifyRes> {
         const data = await this.receiveReqData(req, 'pay');
 
-        const secretKey = this.config.secretKey;
         const signType = this.config.sign_type;
         const result = await this.xmlUtil.parseObjFromXml<WeChatPayNotifyRes>(data);
 
         if (result.return_code === 'FAIL') {
             return result;
         }
-        if (result.sign && result.sign !== this.signUtil.sign(result, secretKey, signType)) {
+        if (result.sign && result.sign !== this.signUtil.sign(result, signType)) {
             return undefined;
         }
 
@@ -74,7 +73,7 @@ export class WeChatNotifyParserUtil {
     /**
      * 生成通知成功返回值
      */
-    public generateSuccessMessage() {
+    public generateSuccessMessage(): string {
         return this.xmlUtil.convertObjToXml({
             return_code: 'SUCCESS',
             return_msg: 'OK'
@@ -86,7 +85,7 @@ export class WeChatNotifyParserUtil {
      *
      * @param errMsg 失败原因
      */
-    public generateFailMessage(errMsg: string) {
+    public generateFailMessage(errMsg: string): string {
         return this.xmlUtil.convertObjToXml({
             return_code: 'FAIL',
             return_msg: errMsg
@@ -98,7 +97,7 @@ export class WeChatNotifyParserUtil {
      *
      * @param req 回调通知请求
      */
-    private async receiveReqData(req: IncomingMessage, type: 'pay' | 'refund') {
+    private async receiveReqData(req: IncomingMessage, type: 'pay' | 'refund'): Promise<string> {
         const errType = type === 'pay' ? '支付' : '退款';
         let xmlStr: string;
         try {

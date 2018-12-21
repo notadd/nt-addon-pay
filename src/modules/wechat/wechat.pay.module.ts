@@ -62,6 +62,7 @@ export class WeChatPayModule implements OnModuleInit {
                 WeChatWapPayService,
                 WeChatRedpackService,
                 WeChatTransferService,
+                WeChatSignUtil,
                 WeChatNotifyParserUtil
             ]
         };
