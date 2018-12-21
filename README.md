@@ -172,6 +172,25 @@ export class PaymentNotifyController {
 }
 ```
 
+#### 使用 WeChatSignUtil 计算签名
+
+在个别支付方式中，需要服务端计算签名并返回给客户端时，使用插件提供的 `WeChatSignUtil` 工具类即可计算签名:
+
+```typescript
+import { Injectable, Inject } from '@nestjs/common';
+import { WeChatSignUtil } from '@notadd/addon-pay';
+
+@Injectable()
+export class TestSign {
+    constructor(@Inject(WeChatSignUtil) private readonly weChatSignUtil: WeChatSignUtil) { }
+
+    async testWechatSign() {
+        const params = { appid: 'xxxxx', openid: 'xxxxx' };
+        const sign = await this.weChatSignUtil.sign(params);
+    }
+}
+```
+
 #### 如何使用支付验收 case ？
 
 两种方式，如下：
