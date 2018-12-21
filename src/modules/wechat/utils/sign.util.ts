@@ -1,19 +1,26 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import * as crypto from 'crypto';
+
+import { WeChatPayConfig } from '../../../common';
+import { WeChatPayConfigProvider } from '../constants/wechat.constant';
 
 /**
  * 微信签名工具
  */
 @Injectable()
 export class WeChatSignUtil {
+    constructor(
+        @Inject(WeChatPayConfigProvider) protected readonly config: WeChatPayConfig
+    ) { }
+
     /**
      * 计算微信支付签名
      *
      * @param params 参数
-     * @param secretKey 秘钥
      * @param signType 签名方式(选填)，默认MD5
      */
-    sign(params: {}, secretKey: string, signType?: 'MD5' | 'HMAC-SHA256') {
+    sign(params: {}, signType?: 'MD5' | 'HMAC-SHA256'): string {
+        const secretKey = this.config.secretKey;
         const paramArr: string[] = [];
         const sortedKeys = Object.keys(params).sort();
         for (const key of sortedKeys) {

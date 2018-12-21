@@ -7,4 +7,5 @@ export * from './services/wap.pay.service';
 export * from './services/redpack.service';
 export * from './services/transfer.service';
 export * from './enums/trade-type.enum';
+export * from './utils/sign.util';
 export * from './utils/notify-parser.util';
