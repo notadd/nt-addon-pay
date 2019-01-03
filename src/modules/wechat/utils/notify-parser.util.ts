@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import * as crypto from 'crypto';
+import { createDecipheriv, createHash } from 'crypto';
 import { IncomingMessage } from 'http';
 
 import { WeChatPayConfig } from '../../../common';
@@ -58,9 +58,9 @@ export class WeChatNotifyParserUtil {
         try {
             const secretKey = this.config.secretKey;
             const cryptedBase64Str = Buffer.from((result as any).req_info).toString('base64');
-            const secretKeyMD5 = crypto.createHash('md5').update(secretKey).digest('hex').toLocaleLowerCase();
+            const secretKeyMD5 = createHash('md5').update(secretKey).digest('hex').toLocaleLowerCase();
 
-            const decipher = crypto.createDecipheriv('aes-256-ecb', secretKeyMD5, '');
+            const decipher = createDecipheriv('aes-256-ecb', secretKeyMD5, '');
             const decryptedStr = Buffer.concat([decipher.update(cryptedBase64Str, 'base64'), decipher.final()]).toString();
 
             Object.assign(result, JSON.parse(decryptedStr));

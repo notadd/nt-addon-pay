@@ -40,7 +40,7 @@ export class WeChatRequestUtil {
             params.mch_id = this.config.mch_id;
         }
 
-        params.nonce_str = this.randomUtil.genRandomStr();
+        params.nonce_str = await this.randomUtil.genRandomStr();
 
         let signType: 'MD5' | 'HMAC-SHA256';
         if (params.sign_type && params.sign_type === 'no_sign_type') {

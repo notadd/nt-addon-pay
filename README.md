@@ -202,6 +202,31 @@ export class TestSign {
 
 *TODO*
 
+### 随机字符生成工具
+
+支付插件内使用了 [nanoid](https://github.com/ai/nanoid) 作为随机字符生成工具，开发者可以通过注入 `RandomUtil`，即可使用该工具。
+
+```typescript
+import { Injectable, Inject } from '@nestjs/common';
+import { RandomUtil } from '@notadd/addon-pay';
+
+@Injectable()
+export class TestSign {
+    constructor(@Inject(RandomUtil) private readonly randomUtil: RandomUtil) { }
+
+    async testRandomStr() {
+        /**
+         * genRandomStr(pool?: string, length?: number) 接受两个参数：
+         *
+         * pool 随机字符池，默认：ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789
+         *
+         * length 随机字符长度，默认：32
+         */
+        const randomStr = await this.randomUtil.genRandomStr();
+    }
+}
+```
+
 ## 贡献说明
 
 我们欢迎 Nest.js 使用者来参与这个插件的开发，作为一个贡献者，请您遵循以下原则：
