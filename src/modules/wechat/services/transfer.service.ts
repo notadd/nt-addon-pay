@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import * as crypto from 'crypto';
+import { publicEncrypt } from 'crypto';
 import * as fs from 'fs';
 import * as https from 'https';
 import * as path from 'path';
@@ -96,7 +96,7 @@ export class WeChatTransferService {
      */
     private async encryptStr(str: string) {
         const pubKey = await this.getPublicKey();
-        return crypto.publicEncrypt(pubKey, Buffer.from(str)).toString('base64');
+        return publicEncrypt(pubKey, Buffer.from(str)).toString('base64');
     }
 
     /**

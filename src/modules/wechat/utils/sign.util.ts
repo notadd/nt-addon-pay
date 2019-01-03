@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import * as crypto from 'crypto';
+import { createHash, createHmac } from 'crypto';
 
 import { WeChatPayConfig } from '../../../common';
 import { WeChatPayConfigProvider } from '../constants/wechat.constant';
@@ -29,8 +29,8 @@ export class WeChatSignUtil {
         }
         let signStr = paramArr.join('&');
         if (signType && signType === 'HMAC-SHA256') {
-            return crypto.createHmac('sha256', secretKey).update(signStr).digest('hex').toUpperCase();
+            return createHmac('sha256', secretKey).update(signStr).digest('hex').toUpperCase();
         }
-        return crypto.createHash('md5').update(signStr += `&key=${secretKey}`).digest('hex').toUpperCase();
+        return createHash('md5').update(signStr += `&key=${secretKey}`).digest('hex').toUpperCase();
     }
 }
