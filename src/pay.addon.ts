@@ -12,7 +12,7 @@ export class PayAddon {
         return {
             module: PayAddon,
             imports: [SharedModule, WeChatPayModule.forRoot(config.wechatConfig), AliPayModule],
-            exports: [WeChatPayModule, AliPayModule]
+            exports: [WeChatPayModule, AliPayModule, SharedModule]
         };
     }
 
