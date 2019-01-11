@@ -42,6 +42,7 @@ export class ApplicationModule {}
 3. 所有接口参数中的 `mch_id`、`appid/wxappid`、`nonce_str`、`sign_type`、`sign` 数据均由插件自动填入，无需手动传入。
 4. 所有请求的返回结果若有 `sign`，插件会自动验签。
 5. 支付通知结果插件会自动验签，退款通知结果插件会自动解密 `req_info` 数据。
+6. 微信 `接口` 调用的返回结果、`回调通知` 的返回结果中的 **金额**、**数量** 的类型会因 `xml2js` 工具解析后全部转换为字符串，需开发者手动转换类型。
 
 #### 使用 WeChat`XXX`PayService 调用 API
 
