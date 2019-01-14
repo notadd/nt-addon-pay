@@ -91,7 +91,7 @@ export class TestPay {
 推荐的做法是，当收到通知进行处理时，首先检查对应业务数据的状态，判断该通知是否已经处理过，如果没有处理过再进行处理，如果处理过直接返回结果成功。在对业务数据进行状态检查和处 理前，要采用数据锁进行并发控制，以避免函数重入造成的数据混乱。
 
 ```typescript
-import { Controller, Inject, Post, Req } from '@nestjs/common';
+import { Controller, Inject, Post, Req, Res } from '@nestjs/common';
 
 import { WeChatNotifyParserUtil } from '@notadd/addon-pay';
 
@@ -111,14 +111,14 @@ export class PaymentNotifyController {
      * @param req 通知请求
      */
     @Post('wechat_order_notify')
-    async weChatOrderNotify(@Req() req) {
+    async weChatOrderNotify(@Req() req, @Res() res) {   // 必须使用 @Res() 注解向微信返回结果
         // 当 data 为 undefined 时，表示通知请求中的 sign 验签失败
         const data = await this.weChatNotifyParserUtil.parsePayNotify(req);
 
         // 验签失败时
         if (!data) {
             // 微信会重新发起通知
-            return this.weChatNotifyParserUtil.generateFailMessage('验签失败');
+            res.end(this.weChatNotifyParserUtil.generateFailMessage('验签失败'));   // 必须使用 res.end() 向微信返回当前业务结果;
         }
 
         // 判断返回状态，失败时
@@ -138,7 +138,7 @@ export class PaymentNotifyController {
         }
 
         // 成功时返回
-        return this.weChatNotifyParserUtil.generateSuccessMessage();
+        res.end(this.weChatNotifyParserUtil.generateSuccessMessage());  // 必须使用 res.end() 向微信返回当前业务结果;
     }
 
     /**
