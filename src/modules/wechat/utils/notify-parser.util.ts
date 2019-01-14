@@ -75,8 +75,7 @@ export class WeChatNotifyParserUtil {
      */
     public generateSuccessMessage(): string {
         return this.xmlUtil.convertObjToXml({
-            return_code: 'SUCCESS',
-            return_msg: 'OK'
+            return_code: 'SUCCESS'
         });
     }
 
