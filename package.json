@@ -15,7 +15,7 @@
     "author": "notadd",
     "license": "Apache-2.0",
     "dependencies": {
-        "nanoid": "^2.0.0",
+        "nanoid": "^3.3.8",
         "xml2js": "^0.4.19"
     },
     "devDependencies": {
